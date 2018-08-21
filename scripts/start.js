@@ -1,14 +1,14 @@
 (function(GAME) {
 	GAME.loadAssets([{
-		name: "fighterIdle",
+		name: "fighterIdleRight",
 		width: 48,
 		height: 48,
 		frameCount: 4,
 		fps: 3
-	}], function(result) {
+	}], function() {
 
 		GAME.createObject("fighter", GAME.objectAssets.idle, true, 0, 0, {
-			idle: GAME.assets.fighterIdle
+			idle: GAME.assets.fighterIdleRight
 		});
 
 		GAME.start();
