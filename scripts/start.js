@@ -1,14 +1,38 @@
 (function(GAME) {
-	GAME.loadAssets([{
-		name: "fighterIdleRight",
-		width: 48,
-		height: 48,
-		frameCount: 4,
-		fps: 3
-	}], function() {
+	var spriteSize = 48;
 
-		GAME.createObject("fighter", GAME.objectAssets.idle, true, 0, 0, {
-			idle: GAME.assets.fighterIdleRight
+	GAME.loadAssets([
+		{
+			name: "fighterIdleRight",
+			width: spriteSize,
+			height: spriteSize,
+			frameCount: 4,
+			fps: 2
+		},
+		{
+			name: "fighterWalkRight",
+			width: spriteSize,
+			height: spriteSize,
+			frameCount: 2,
+			fps: 4
+		}
+	], function() {
+		GAME.createObject({
+			objectName: "fighter",
+			defaultAsset: GAME.objectAssets.idle,
+			loop: true,
+			x: 0,
+			y: 0,
+			assets: {
+				idle: GAME.assets.fighterIdleRight,
+				walk: GAME.assets.fighterWalkRight
+			}
+		}, function(fighter) {
+			fighter.speed = 1;
+			fighter.keys = {
+				forward: [68],
+				back: [65]
+			};
 		});
 
 		GAME.start();
