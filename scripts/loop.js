@@ -3,10 +3,13 @@
 	GAME.updateRedrawCycle = function(context, delta) {
 		var objectKeys = Object.keys(GAME.objects);
 
+		objectKeys.forEach(function(key) {
+			GAME.clearObject(key, context);
+		});
+
 		GAME.updateObjects(delta);
 
 		objectKeys.forEach(function(key) {
-			GAME.clearObject(key, context);
 			GAME.drawObject(key, context, delta);
 		});
 	}
