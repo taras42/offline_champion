@@ -3,14 +3,14 @@
 
 	GAME.loadAssets([
 		{
-			name: "fighterIdleRight",
+			name: "blueFighterIdle",
 			width: spriteSize,
 			height: spriteSize,
 			frameCount: 4,
 			fps: 2
 		},
 		{
-			name: "fighterWalkRight",
+			name: "blueFighterWalk",
 			width: spriteSize,
 			height: spriteSize,
 			frameCount: 2,
@@ -24,8 +24,8 @@
 			x: 0,
 			y: 0,
 			assets: {
-				idle: GAME.assets.fighterIdleRight,
-				walk: GAME.assets.fighterWalkRight
+				idle: GAME.assets.blueFighterIdle,
+				walk: GAME.assets.blueFighterWalk
 			}
 		}, function(fighter) {
 			fighter.speed = 1;
