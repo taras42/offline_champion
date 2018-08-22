@@ -3,9 +3,10 @@
 	GAME.updateRedrawCycle = function(context, delta) {
 		var objectKeys = Object.keys(GAME.objects);
 
+		GAME.updateObjects(delta);
+
 		objectKeys.forEach(function(key) {
 			GAME.clearObject(key, context);
-			GAME.updateObject(key, delta);
 			GAME.drawObject(key, context, delta);
 		});
 	}
@@ -15,7 +16,7 @@
 			context = canvas.getContext("2d");
 
 		context.imageSmoothingEnabled = false;
-		context.scale(4, 4);
+		context.scale(5, 5);
 
 		var then = Date.now();
 

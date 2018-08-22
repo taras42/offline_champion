@@ -18,7 +18,7 @@
 		}
 	], function() {
 		GAME.createObject({
-			objectName: "fighter",
+			objectName: "blueFighter",
 			defaultAsset: GAME.objectAssets.idle,
 			loop: true,
 			x: 0,
