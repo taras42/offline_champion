@@ -7,7 +7,7 @@
 			GAME.clearObject(key, context);
 		});
 
-		GAME.updateObjects(delta);
+		GAME.updateObjects(context, delta);
 
 		objectKeys.forEach(function(key) {
 			GAME.drawObject(key, context, delta);
@@ -19,7 +19,7 @@
 			context = canvas.getContext("2d");
 
 		context.imageSmoothingEnabled = false;
-		context.scale(5, 5);
+		context.scale(GAME.settings.scale.x, GAME.settings.scale.y);
 
 		var then = Date.now();
 

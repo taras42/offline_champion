@@ -1,11 +1,6 @@
 (function(GAME) {
-	var objectAssets = {
-		idle: "idle",
-		walk: "walk"
-	};
-
+	
 	GAME.objects = {};
-	GAME.objectAssets = objectAssets;
 	GAME.objectSkipFrameCount = {};
 
 	GAME.createObject = function(options, decorate) {
@@ -14,18 +9,10 @@
 		GAME.objects[objectName] = {
 			x: options.x,
 			y: options.y,
-			assets: options.assets,
 			currentAsset: {
 				loop: options.loop,
 				frameIndex: 0,
 				asset: options.defaultAsset
-			},
-			getAsset: function() {
-				return {
-					frameIndex: this.currentAsset.frameIndex,
-					loop: this.currentAsset.loop,
-					asset: this.assets[this.currentAsset.asset]
-				}
 			},
 			nextFrame: function(frameIndex) {
 				this.currentAsset.frameIndex = frameIndex;

@@ -2,7 +2,7 @@
 
 	GAME.clearObject = function(objectKey, context) {
 		var object = GAME.objects[objectKey],
-		asset = object.getAsset().asset;
+		asset = object.currentAsset.asset;
 
 		context.clearRect(object.x, object.y, asset.width, asset.height);
 	}
@@ -10,7 +10,7 @@
 	GAME.drawObject = function(objectKey, context, delta) {
 		var object = GAME.objects[objectKey];
 
-		var assetObject = object.getAsset(),
+		var assetObject = object.currentAsset,
 			asset = assetObject.asset,
 			assetFPS = asset.fps,
 			assetFrameCount = asset.frameCount - 1;

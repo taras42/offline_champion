@@ -19,14 +19,10 @@
 	], function() {
 		GAME.createObject({
 			objectName: "blueFighter",
-			defaultAsset: GAME.objectAssets.idle,
+			defaultAsset: GAME.assets.blueFighterIdle,
 			loop: true,
 			x: 0,
-			y: 0,
-			assets: {
-				idle: GAME.assets.blueFighterIdle,
-				walk: GAME.assets.blueFighterWalk
-			}
+			y: 0
 		}, function(fighter) {
 			fighter.speed = 1;
 			fighter.keys = {

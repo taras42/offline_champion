@@ -6,33 +6,48 @@
 		});
 	}
 
-	function updateFighterPosition(fighter, delta) {
+	function updateFighterPosition(fighter, context, delta) {
+		var canvasWidth = context.canvas.clientWidth,
+			scaleX = GAME.settings.scale.x;
+
 		var forward = doesFighterWalk(fighter, "forward"),
 			back = doesFighterWalk(fighter, "back"),
 			walks = forward || back,
 			currentAsset = fighter.currentAsset.asset,
-			speed;
+			walkAsset = GAME.assets.blueFighterWalk,
+			idleAsset = GAME.assets.blueFighterIdle,
+			speed,
+			xBoundary,
+			x;
 
 		if (walks) {
-			if (currentAsset !== GAME.objectAssets.walk) {
-				fighter.setAsset(GAME.objectAssets.walk, true);
+			if (currentAsset !== walkAsset) {
+				fighter.setAsset(walkAsset, true);
 			}
 
 			speed = fighter.speed * delta;
 
 			if (forward) {
-				fighter.x += speed;
+				x = fighter.x + speed;
 			} else if (back) {
-				fighter.x -= speed;
+				x = fighter.x - speed;
 			}
-		} else if (currentAsset !== GAME.objectAssets.idle) {
-			fighter.setAsset(GAME.objectAssets.idle, true);
+
+			xBoundary = (x * scaleX) + (currentAsset.width * scaleX);
+
+			if (xBoundary > canvasWidth || x < 0) {
+				x = fighter.x;	
+			}
+
+			fighter.x = x;
+		} else if (currentAsset !== idleAsset) {
+			fighter.setAsset(idleAsset, true);
 		}
 	}
 
-	GAME.updateObjects = function(delta) {
+	GAME.updateObjects = function(context, delta) {
 		var blueFighter = GAME.objects.blueFighter;
 
-		updateFighterPosition(blueFighter, delta);
+		updateFighterPosition(blueFighter, context, delta);
 	};
 })(GAME);
