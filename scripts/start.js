@@ -39,13 +39,19 @@
 		getWalkSprite("redFighterWalk"),
 		getHitSprite("redFighterHit")
 	], function() {
+		var bIdle = GAME.assets.blueFighterIdle,
+			rIdle = GAME.assets.redFighterIdle;
+
 		GAME.createObject({
 			objectName: "blueFighter",
-			defaultAsset: GAME.assets.blueFighterIdle,
+			defaultAsset: bIdle,
 			loop: true,
 			x: 0,
 			y: 0
 		}, function(fighter) {
+			fighter.idleA = bIdle;
+			fighter.walkA = GAME.assets.blueFighterWalk;
+			fighter.hitA = GAME.assets.blueFighterHit;
 			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 			fighter.damage = 10;
@@ -60,19 +66,22 @@
 
 		GAME.createObject({
 			objectName: "redFighter",
-			defaultAsset: GAME.assets.redFighterIdle,
+			defaultAsset: rIdle,
 			loop: true,
 			x: 100,
 			y: 0
 		}, function(fighter) {
+			fighter.idleA = rIdle;
+			fighter.walkA = GAME.assets.redFighterWalk;
+			fighter.hitA = GAME.assets.redFighterHit;
 			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 			fighter.damage = 10;
 			fighter.balance = 100;
 			fighter.speed = 1;
 			fighter.keys = {
-				forward: [74],
-				back: [76],
+				forward: [76],
+				back: [74],
 				hit: [75]
 			};
 		});

@@ -21,12 +21,12 @@
 		}
 	}
 
-	function getHitDamage(fighter1, fighter2, inverseDirection) {
+	function getHitDamage(fighter1, fighter2, inverseFighters) {
 		var fighter1Asset = fighter1.currentAsset.asset,
 			fighter2Asset = fighter2.currentAsset.asset,
 			damage;
 
-		if (inverseDirection) {
+		if (inverseFighters) {
 			if (fighter2.x - fighter2Asset.width < fighter1.x + fighter1Asset.width/2) {
 				return fighter2.damage;
 			}
@@ -43,8 +43,15 @@
 		fighter2.balance -= damage;
 	}
 
-	function tryRestoreFighterHit(fighter, asset, hitAsset) {
-		var hasHitAsset = fighter.currentAsset.asset === hitAsset;
+	function resetFighterXToPrevX(fighter) {
+		if (fighter.prevX) {
+			fighter.x = fighter.prevX;
+			delete fighter.prevX;
+		}
+	}
+
+	function tryRestoreFighterHit(fighter) {
+		var hasHitAsset = fighter.currentAsset.asset === fighter.hitA;
 
 		if (fighter.cooldown || fighter.stunned || hasHitAsset) {
 			fighter.restoreHitDelay -= 1;
@@ -54,7 +61,8 @@
 				fighter.cooldown = false;
 				fighter.stunned = false;
 
-				fighter.setAsset(asset, true);
+				fighter.setAsset(fighter.idleA, true);
+				resetFighterXToPrevX(fighter);
 			}
 		}
 	}
@@ -72,6 +80,10 @@
 			x = fighter.x;
 
 		if (walks) {
+			if (currentAsset !== fighter.walkA) {
+				fighter.setAsset(fighter.walkA, true);
+			}
+
 			speed = fighter.speed * delta;
 
 			if (forward) {
@@ -85,15 +97,29 @@
 			if (xBoundary > canvasWidth || x < 0) {
 				x = fighter.x;	
 			}
-
-			fighter.x = x;
+		} else if (currentAsset === fighter.walkA) {
+			resetFighterXToPrevX(fighter);
+			fighter.setAsset(fighter.idleA, true);
 		}
 
 		return x;
 	};
 
-	function trySetFighterPosition() {
-		
+	function trySetFightersPosition(leftFighter, rightFighter, leftFighterPos, rightFighterPos) {
+		var leftFighterA = leftFighter.currentAsset.asset,
+			leftFighterAWidth = leftFighterA.width,
+			rightFighter2A = rightFighter.currentAsset.asset;
+
+		var leftFighterBoundary = leftFighterPos + leftFighterAWidth - leftFighterAWidth/6,
+			rightFighterBoundary = rightFighterPos + rightFighter2A.width/6;
+
+		if (leftFighterBoundary < rightFighterBoundary) {
+			leftFighter.x = leftFighterPos;
+		}
+
+		if (rightFighterBoundary > leftFighterBoundary) {
+			rightFighter.x = rightFighterPos;
+		}
 	}
 
 	function updateFightersState(blueFighter, redFighter, context, delta) {
@@ -110,29 +136,29 @@
 		if (blueFighterHits) {
 			damage = getHitDamage(blueFighter, redFighter);
 
-			blueFighter.setAsset(GAME.assets.blueFighterHit, true);
+			blueFighter.setAsset(blueFighter.hitA, true);
 
 			if (damage)  {
 				setFightersStateAfterHit(blueFighter, redFighter, damage);
 			}
-		} else {
-			trySetFighterPosition();
-		}
-
-		if (redFighterHits) {
+		} else if (redFighterHits) {
 			damage = getHitDamage(redFighter, blueFighter, true);
 
-			redFighter.setAsset(GAME.assets.redFighterHit, true);
+			redFighter.setAsset(redFighter.hitA, true);
+			redFighter.prevX = redFighter.x;
+
+			redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
 
 			if (damage)  {
 				setFightersStateAfterHit(redFighter, blueFighter, damage);
 			}
 		} else {
-			trySetFighterPosition();
+			trySetFightersPosition(blueFighter, redFighter, 
+				blueFighterNextPosition, redFighterNextPosition);
 		}
 
-		tryRestoreFighterHit(blueFighter, GAME.assets.blueFighterIdle, GAME.assets.blueFighterHit);
-		tryRestoreFighterHit(redFighter, GAME.assets.redFighterIdle, GAME.assets.redFighterHit);
+		tryRestoreFighterHit(blueFighter);
+		tryRestoreFighterHit(redFighter);
 	}
 
 	GAME.updateObjects = function(context, delta) {
