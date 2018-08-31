@@ -86,6 +86,18 @@
 			};
 		});
 
-		GAME.start();
+		var canvas = document.getElementById("game"),
+			context = canvas.getContext("2d");
+
+		context.imageSmoothingEnabled = false;
+		context.scale(GAME.settings.scale, GAME.settings.scale);
+
+		context.beginPath();
+		context.moveTo(4, 84);
+		context.lineTo(252, 84);
+		context.strokeStyle = "#191970";
+		context.stroke();
+
+		GAME.start(context);
 	});
 })(GAME);

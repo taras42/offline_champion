@@ -1,1 +1,7 @@
-canvas {}
+canvas {
+	border: 5px dashed #191970;
+}
+
+body {
+	background-color: #ffe4c4;
+}

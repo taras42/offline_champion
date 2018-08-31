@@ -14,13 +14,7 @@
 		});
 	}
 
-	GAME.start = function() {
-		var canvas = document.getElementById("game"),
-			context = canvas.getContext("2d");
-
-		context.imageSmoothingEnabled = false;
-		context.scale(GAME.settings.scale.x, GAME.settings.scale.y);
-
+	GAME.start = function(context) {
 		var then = Date.now();
 
 		function step() {
