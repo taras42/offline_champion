@@ -1,6 +1,7 @@
 (function(GAME) {
 	
 	GAME.objects = {};
+	GAME.staticObjects = {};
 	GAME.objectSkipFrameCount = {};
 
 	GAME.createObject = function(options, decorate) {

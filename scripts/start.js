@@ -68,7 +68,7 @@
 			objectName: "redFighter",
 			defaultAsset: rIdle,
 			loop: true,
-			x: 185,
+			x: 183,
 			y: 35
 		}, function(fighter) {
 			fighter.idleA = rIdle;
@@ -86,17 +86,19 @@
 			};
 		});
 
+		GAME.staticObjects.line = {
+			color: "#191970",
+			x1: 4,
+			x2: 252,
+			height: 1,
+			y: 83.5  
+		};
+
 		var canvas = document.getElementById("game"),
 			context = canvas.getContext("2d");
 
 		context.imageSmoothingEnabled = false;
 		context.scale(GAME.settings.scale, GAME.settings.scale);
-
-		context.beginPath();
-		context.moveTo(4, 83.5);
-		context.lineTo(252, 83.5);
-		context.strokeStyle = "#191970";
-		context.stroke();
 
 		GAME.start(context);
 	});

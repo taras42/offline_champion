@@ -4,7 +4,10 @@
 		var objectKeys = Object.keys(GAME.objects);
 
 		objectKeys.forEach(function(key) {
-			GAME.clearObject(key, context);
+			var object = GAME.objects[key],
+				asset = object.currentAsset.asset;
+
+			GAME.clearRect(object.x, object.y, asset.width, asset.height, context);
 		});
 
 		GAME.updateObjects(context, delta);
@@ -12,6 +15,8 @@
 		objectKeys.forEach(function(key) {
 			GAME.drawObject(key, context, delta);
 		});
+
+		GAME.drawStaticLine(context);
 	}
 
 	GAME.start = function(context) {

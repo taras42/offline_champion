@@ -1,10 +1,22 @@
 (function(GAME) {
 
-	GAME.clearObject = function(objectKey, context) {
-		var object = GAME.objects[objectKey],
-		asset = object.currentAsset.asset;
+	GAME.clearRect = function(x, y, width, height, context) {
+		context.clearRect(x, y, width, height);
+	}
 
-		context.clearRect(object.x, object.y, asset.width, asset.height);
+	GAME.drawStaticLine = function(context) {
+		var line = GAME.staticObjects.line,
+			x1 = line.x1,
+			x2 = line.x2,
+			y = line.y;
+
+		GAME.clearRect(x1, y, x2 - x1, line.height, context);
+
+		context.beginPath();
+		context.moveTo(x1, y);
+		context.lineTo(x2, y);
+		context.strokeStyle = line.color;
+		context.stroke();
 	}
 
 	GAME.drawObject = function(objectKey, context, delta) {
