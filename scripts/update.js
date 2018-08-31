@@ -21,19 +21,19 @@
 		}
 	}
 
-	function getHitDamage(fighter1, fighter2, inverseFighters) {
+	function getHitDamage(fighter1, fighter2, inverseDirection) {
 		var fighter1Asset = fighter1.currentAsset.asset,
 			fighter2Asset = fighter2.currentAsset.asset,
+			fighter1Damage = fighter1.damage,
+			fighter2HalfWidthCoordinate = fighter2.x + fighter2Asset.width/2,
 			damage;
 
-		if (inverseFighters) {
-			if (fighter2.x - fighter2Asset.width < fighter1.x + fighter1Asset.width/2) {
-				return fighter2.damage;
+		if (inverseDirection) {
+			if (fighter1.x < fighter2HalfWidthCoordinate) {
+				return fighter1Damage;
 			}
-		} else {
-			if (fighter1.x + fighter1Asset.width > fighter2.x + fighter2Asset.width/2) {
-				return fighter1.damage;
-			}
+		} else if (fighter1.x + fighter1Asset.width > fighter2HalfWidthCoordinate) {
+			return fighter1Damage;
 		}
 	}
 
@@ -80,6 +80,8 @@
 			x = fighter.x;
 
 		if (walks) {
+			resetFighterXToPrevX(fighter);
+
 			if (currentAsset !== fighter.walkA) {
 				fighter.setAsset(fighter.walkA, true);
 			}
@@ -144,11 +146,13 @@
 		} else if (redFighterHits) {
 			damage = getHitDamage(redFighter, blueFighter, true);
 
-			redFighter.setAsset(redFighter.hitA, true);
-			redFighter.prevX = redFighter.x;
+			if (redFighter.currentAsset.asset !== redFighter.hitA) {
+				redFighter.setAsset(redFighter.hitA, true);
+				redFighter.prevX = redFighter.x;
 
-			redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
-
+				redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
+			}
+			
 			if (damage)  {
 				setFightersStateAfterHit(redFighter, blueFighter, damage);
 			}
