@@ -49,13 +49,15 @@
 			x: 25,
 			y: 35
 		}, function(fighter) {
+			fighter.color = "#008BB8";
+			fighter.lifeSegX = 6;
 			fighter.idleA = bIdle;
 			fighter.walkA = GAME.assets.blueFighterWalk;
 			fighter.hitA = GAME.assets.blueFighterHit;
 			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 			fighter.damage = 10;
-			fighter.balance = 100;
+			fighter.life = 100;
 			fighter.speed = 1;
 			fighter.keys = {
 				forward: [68],
@@ -71,13 +73,15 @@
 			x: 183,
 			y: 35
 		}, function(fighter) {
+			fighter.color = "#FC4E51";
+			fighter.lifeSegX = 247;
 			fighter.idleA = rIdle;
 			fighter.walkA = GAME.assets.redFighterWalk;
 			fighter.hitA = GAME.assets.redFighterHit;
 			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 			fighter.damage = 10;
-			fighter.balance = 100;
+			fighter.life = 100;
 			fighter.speed = 1;
 			fighter.keys = {
 				forward: [76],
@@ -90,8 +94,16 @@
 			color: "#191970",
 			x1: 4,
 			x2: 252,
-			height: 1,
+			h: 1,
 			y: 83.5  
+		};
+
+		GAME.staticObjects.lifeSeg = {
+			w: 3,
+			h: 3,
+			gap: 3,
+			y: 6,
+			q: 10
 		};
 
 		var canvas = document.getElementById("game"),

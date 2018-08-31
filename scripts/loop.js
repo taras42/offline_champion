@@ -17,6 +17,7 @@
 		});
 
 		GAME.drawStaticLine(context);
+		GAME.drawLifeBars(context);
 	}
 
 	GAME.start = function(context) {

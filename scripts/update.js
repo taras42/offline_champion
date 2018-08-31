@@ -40,7 +40,7 @@
 	function setFightersStateAfterHit(fighter1, fighter2, damage) {
 		fighter1.cooldown = true;
 		fighter2.stunned = true;
-		fighter2.balance -= damage;
+		fighter2.life -= damage;
 	}
 
 	function resetFighterXToPrevX(fighter) {

@@ -1,8 +1,27 @@
 (function(GAME) {
 
+	function renderLifeBar(x, color, segmentsCount, lifeSeg, context, invert) {
+		var gap = lifeSeg.gap,
+			width = lifeSeg.w,
+			height = lifeSeg.h,
+			y = lifeSeg.y;
+
+		var rectW = lifeSeg.q * (width + gap),
+			rectX = invert ? x - rectW : x;
+
+		GAME.clearRect(rectX, y, rectW, height, context);
+
+		for (var i = 0; i < segmentsCount; i++) {
+			context.fillStyle = color;
+			context.fillRect(x, y, width, height);
+
+			x = invert ? x - width - gap : x + width + gap;
+		}
+	}
+
 	GAME.clearRect = function(x, y, width, height, context) {
 		context.clearRect(x, y, width, height);
-	}
+	};
 
 	GAME.drawStaticLine = function(context) {
 		var line = GAME.staticObjects.line,
@@ -10,14 +29,23 @@
 			x2 = line.x2,
 			y = line.y;
 
-		GAME.clearRect(x1, y, x2 - x1, line.height, context);
+		GAME.clearRect(x1, y, x2 - x1, line.h, context);
 
 		context.beginPath();
 		context.moveTo(x1, y);
 		context.lineTo(x2, y);
 		context.strokeStyle = line.color;
 		context.stroke();
-	}
+	};
+
+	GAME.drawLifeBars = function(context) {
+		var blueFighter = GAME.objects.blueFighter,
+			redFighter = GAME.objects.redFighter,
+			lifeSeg = GAME.staticObjects.lifeSeg;
+
+		renderLifeBar(blueFighter.lifeSegX, blueFighter.color, blueFighter.life/lifeSeg.q, lifeSeg, context);
+		renderLifeBar(redFighter.lifeSegX, redFighter.color, redFighter.life/lifeSeg.q, lifeSeg, context, true);
+	};
 
 	GAME.drawObject = function(objectKey, context, delta) {
 		var object = GAME.objects[objectKey];
