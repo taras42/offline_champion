@@ -69,7 +69,7 @@
 
 	function getFighterNextPosition(fighter, walkState, context, delta) {
 		var canvasWidth = context.canvas.clientWidth,
-			scaleX = GAME.settings.scale.x;
+			scaleX = GAME.settings.scale;
 
 		var forward = walkState.forward,
 			back = walkState.back,

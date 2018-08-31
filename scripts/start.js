@@ -46,8 +46,8 @@
 			objectName: "blueFighter",
 			defaultAsset: bIdle,
 			loop: true,
-			x: 0,
-			y: 0
+			x: 25,
+			y: 35
 		}, function(fighter) {
 			fighter.idleA = bIdle;
 			fighter.walkA = GAME.assets.blueFighterWalk;
@@ -68,8 +68,8 @@
 			objectName: "redFighter",
 			defaultAsset: rIdle,
 			loop: true,
-			x: 100,
-			y: 0
+			x: 185,
+			y: 35
 		}, function(fighter) {
 			fighter.idleA = rIdle;
 			fighter.walkA = GAME.assets.redFighterWalk;
@@ -93,8 +93,8 @@
 		context.scale(GAME.settings.scale, GAME.settings.scale);
 
 		context.beginPath();
-		context.moveTo(4, 84);
-		context.lineTo(252, 84);
+		context.moveTo(4, 83.5);
+		context.lineTo(252, 83.5);
 		context.strokeStyle = "#191970";
 		context.stroke();
 
