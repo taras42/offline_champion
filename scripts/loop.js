@@ -18,6 +18,7 @@
 
 		GAME.drawStaticLine(context);
 		GAME.drawLifeBars(context);
+		GAME.drawGameOver(context);
 	}
 
 	GAME.start = function(context) {
@@ -27,16 +28,15 @@
 			var now =  Date.now(),
 				frameDelay = now - then;
 
-			delta = Math.round(frameDelay/GAME.settings.frameDelay);	
+			delta = Math.round(frameDelay/GAME.settings.frameDelay);
 
 			GAME.updateRedrawCycle(context, delta);
 
 		  	then = now;
-		  
+
 			window.requestAnimationFrame(step);
 		}
 
 		window.requestAnimationFrame(step);
 	};
 })(GAME);
-

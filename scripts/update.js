@@ -9,8 +9,8 @@
 	}
 
 	function doesFighterHit(fighter) {
-		return !fighter.cooldown 
-			&& !fighter.stunned 
+		return !fighter.cooldown
+			&& !fighter.stunned
 			&& fighter.keys.hit.find(isKeyPressedPredicate);
 	}
 
@@ -40,7 +40,9 @@
 	function setFightersStateAfterHit(fighter1, fighter2, damage) {
 		fighter1.cooldown = true;
 		fighter2.stunned = true;
-		fighter2.life -= damage;
+		if (fighter2.life > 0) {
+				fighter2.life -= damage;
+		}
 	}
 
 	function resetFighterXToPrevX(fighter) {
@@ -97,7 +99,7 @@
 			xBoundary = (x * scaleX) + (currentAsset.width * scaleX);
 
 			if (xBoundary > canvasWidth || x < 0) {
-				x = fighter.x;	
+				x = fighter.x;
 			}
 		} else if (currentAsset === fighter.walkA) {
 			resetFighterXToPrevX(fighter);
@@ -152,12 +154,12 @@
 
 				redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
 			}
-			
+
 			if (damage)  {
 				setFightersStateAfterHit(redFighter, blueFighter, damage);
 			}
 		} else {
-			trySetFightersPosition(blueFighter, redFighter, 
+			trySetFightersPosition(blueFighter, redFighter,
 				blueFighterNextPosition, redFighterNextPosition);
 		}
 
@@ -165,10 +167,18 @@
 		tryRestoreFighterHit(redFighter);
 	}
 
+	function updateGameState(blueFighter, redFighter, context, delta) {
+
+	}
+
 	GAME.updateObjects = function(context, delta) {
 		var blueFighter = GAME.objects.blueFighter,
-			redFighter = GAME.objects.redFighter;
+				redFighter = GAME.objects.redFighter;
 
-		updateFightersState(blueFighter, redFighter, context, delta);
+		if (!GAME.state.over) {
+				updateFightersState(blueFighter, redFighter, context, delta);
+		}
+
+		updateGameState(blueFighter, redFighter, context, delta);
 	};
 })(GAME);

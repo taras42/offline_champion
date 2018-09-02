@@ -7,7 +7,7 @@
 			y = lifeSeg.y;
 
 		var rectW = lifeSeg.q * (width + gap),
-			rectX = invert ? x - rectW : x;
+				rectX = invert ? x + width - rectW : x;
 
 		GAME.clearRect(rectX, y, rectW, height, context);
 
@@ -16,6 +16,28 @@
 			context.fillRect(x, y, width, height);
 
 			x = invert ? x - width - gap : x + width + gap;
+		}
+	}
+
+	GAME.drawGameOver = function(context) {
+		var gameOver = GAME.staticObjects.gameOver,
+				blueFighter = GAME.objects.blueFighter,
+				redFighter = GAME.objects.redFighter,
+				color;
+
+		if (blueFighter.life <= 0) {
+				color = blueFighter.color;
+				GAME.state.over = true;
+		} else if (redFighter.life <= 0) {
+				GAME.state.over = true;
+			  color = redFighter.color;
+		}
+
+		if (GAME.state.over) {
+			context.font = gameOver.f;
+			context.fillStyle = color;
+			context.textAlign = gameOver.tA;
+			context.fillText(gameOver.t, gameOver.x, gameOver.y);
 		}
 	}
 
@@ -69,10 +91,10 @@
 			GAME.objectSkipFrameCount[objectKey] = 1;
 		}
 
-		context.drawImage(assetObject.asset.spriteSheet, 
-			0, assetFrameIndex * asset.height, 
-			asset.width, asset.height, 
-			object.x, object.y, 
+		context.drawImage(assetObject.asset.spriteSheet,
+			0, assetFrameIndex * asset.height,
+			asset.width, asset.height,
+			object.x, object.y,
 			asset.width, asset.height
 		);
 

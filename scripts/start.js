@@ -95,7 +95,7 @@
 			x1: 4,
 			x2: 252,
 			h: 1,
-			y: 83.5  
+			y: 83.5
 		};
 
 		GAME.staticObjects.lifeSeg = {
@@ -106,8 +106,20 @@
 			q: 10
 		};
 
+		GAME.staticObjects.gameOver = {
+			t: "OFFLINE",
+			tA: "center",
+			f: "6px Courier",
+			x: 128,
+			y: 18
+		};
+
+		GAME.state = {
+			over: false
+		}
+
 		var canvas = document.getElementById("game"),
-			context = canvas.getContext("2d");
+			  context = canvas.getContext("2d");
 
 		context.imageSmoothingEnabled = false;
 		context.scale(GAME.settings.scale, GAME.settings.scale);
