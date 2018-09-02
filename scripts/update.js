@@ -174,8 +174,8 @@
 
 		GAME.state.offlineFighter = offlineFighter;
 
-		if (offlineFighter) {
-			//offlineFighter.y += offlineFighter.speed * delta;
+		if (offlineFighter && (offlineFighter.y < GAME.settings.res.y)) {
+			offlineFighter.y += offlineFighter.speed * delta;
 		}
 	}
 
