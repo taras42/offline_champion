@@ -20,24 +20,15 @@
 	}
 
 	GAME.drawGameOver = function(context) {
-		var gameOver = GAME.staticObjects.gameOver,
-				blueFighter = GAME.objects.blueFighter,
-				redFighter = GAME.objects.redFighter,
-				color;
-
-		if (blueFighter.life <= 0) {
-				color = blueFighter.color;
-				GAME.state.over = true;
-		} else if (redFighter.life <= 0) {
-				GAME.state.over = true;
-			  color = redFighter.color;
-		}
+		var gameOver = GAME.staticObjects.gameOver;
 
 		if (GAME.state.over) {
 			context.font = gameOver.f;
-			context.fillStyle = color;
+			context.fillStyle = GAME.state.offlineFighter.color;
 			context.textAlign = gameOver.tA;
 			context.fillText(gameOver.t, gameOver.x, gameOver.y);
+		} else {
+			GAME.clearRect(gameOver.x, gameOver.y, gameOver.t.length * gameOver.fs, gameOver.fs, context);
 		}
 	}
 

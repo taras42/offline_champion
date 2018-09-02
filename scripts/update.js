@@ -168,7 +168,17 @@
 	}
 
 	function updateGameState(blueFighter, redFighter, context, delta) {
+		var offlineFighter;
 
+		if (blueFighter.life <= 0) {
+				GAME.state.over = true
+				offlineFighter = blueFighter;
+		} else if (redFighter.life <= 0) {
+				GAME.state.over = true;
+				offlineFighter = redFighter;
+		}
+
+		GAME.state.offlineFighter = offlineFighter;
 	}
 
 	GAME.updateObjects = function(context, delta) {

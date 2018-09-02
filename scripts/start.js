@@ -106,16 +106,20 @@
 			q: 10
 		};
 
+		var fontSize = 6;
+
 		GAME.staticObjects.gameOver = {
 			t: "OFFLINE",
 			tA: "center",
-			f: "6px Courier",
+			fs: fontSize,
+			f: fontSize + "px Courier",
 			x: 128,
 			y: 18
 		};
 
 		GAME.state = {
-			over: false
+			over: false,
+			offlineFighter: null
 		}
 
 		var canvas = document.getElementById("game"),
