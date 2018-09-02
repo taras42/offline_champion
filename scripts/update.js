@@ -176,6 +176,8 @@
 
 		if (offlineFighter && (offlineFighter.y < GAME.settings.res.y)) {
 			offlineFighter.y += offlineFighter.speed * delta;
+		} else {
+			//GAME.reset();
 		}
 	}
 
