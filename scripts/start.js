@@ -117,10 +117,7 @@
 			y: 18
 		};
 
-		GAME.state = {
-			over: false,
-			offlineFighter: null
-		}
+		GAME.state = {};
 
 		var canvas = document.getElementById("game"),
 			  context = canvas.getContext("2d");

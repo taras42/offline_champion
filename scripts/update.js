@@ -70,15 +70,11 @@
 	}
 
 	function getFighterNextPosition(fighter, walkState, context, delta) {
-		var canvasWidth = context.canvas.clientWidth,
-			scaleX = GAME.settings.scale;
-
 		var forward = walkState.forward,
 			back = walkState.back,
 			walks = forward || back,
 			currentAsset = fighter.currentAsset.asset,
 			speed,
-			xBoundary,
 			x = fighter.x;
 
 		if (walks) {
@@ -96,9 +92,7 @@
 				x = fighter.x - speed;
 			}
 
-			xBoundary = (x * scaleX) + (currentAsset.width * scaleX);
-
-			if (xBoundary > canvasWidth || x < 0) {
+			if (x + currentAsset.width > GAME.settings.res.x || x < 0) {
 				x = fighter.x;
 			}
 		} else if (currentAsset === fighter.walkA) {
@@ -179,6 +173,10 @@
 		}
 
 		GAME.state.offlineFighter = offlineFighter;
+
+		if (offlineFighter) {
+			//offlineFighter.y += offlineFighter.speed * delta;
+		}
 	}
 
 	GAME.updateObjects = function(context, delta) {
