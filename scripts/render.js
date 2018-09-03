@@ -6,11 +6,6 @@
 			height = lifeSeg.h,
 			y = lifeSeg.y;
 
-		var rectW = lifeSeg.q * (width + gap),
-				rectX = invert ? x + width - rectW : x;
-
-		GAME.clearRect(rectX, y, rectW, height, context);
-
 		for (var i = 0; i < segmentsCount; i++) {
 			context.fillStyle = color;
 			context.fillRect(x, y, width, height);
@@ -27,13 +22,11 @@
 			context.fillStyle = GAME.state.offlineFighter.color;
 			context.textAlign = gameOver.tA;
 			context.fillText(gameOver.t, gameOver.x, gameOver.y);
-		} else {
-			GAME.clearRect(gameOver.x, gameOver.y, gameOver.t.length * gameOver.fs, gameOver.fs, context);
 		}
 	}
 
-	GAME.clearRect = function(x, y, width, height, context) {
-		context.clearRect(x, y, width, height);
+	GAME.clearScreen = function(context) {
+		context.clearRect(0, 0, GAME.settings.res.x, GAME.settings.res.y);
 	};
 
 	GAME.drawStaticLine = function(context) {
@@ -41,8 +34,6 @@
 			x1 = line.x1,
 			x2 = line.x2,
 			y = line.y;
-
-		GAME.clearRect(x1, y, x2 - x1, line.h, context);
 
 		context.beginPath();
 		context.moveTo(x1, y);
