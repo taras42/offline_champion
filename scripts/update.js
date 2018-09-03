@@ -174,11 +174,20 @@
 
 		GAME.state.offlineFighter = offlineFighter;
 
-		if (offlineFighter && (offlineFighter.y < GAME.settings.res.y)) {
-			offlineFighter.y += offlineFighter.speed * delta;
-		} else {
-			//GAME.reset();
+		if (offlineFighter) {
+			if (offlineFighter.y < GAME.settings.res.y) {
+					offlineFighter.y += offlineFighter.speed * delta;
+			} else {
+					GAME.reset();
+			}
 		}
+	}
+
+	GAME.reset = function() {
+		GAME.state.over = false;
+
+		GAME.createBlueFighter();
+		GAME.createRedFighter();
 	}
 
 	GAME.updateObjects = function(context, delta) {

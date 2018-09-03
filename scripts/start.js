@@ -40,55 +40,62 @@
 		getHitSprite("redFighterHit")
 	], function() {
 		var bIdle = GAME.assets.blueFighterIdle,
-			rIdle = GAME.assets.redFighterIdle;
+				rIdle = GAME.assets.redFighterIdle;
 
-		GAME.createObject({
-			objectName: "blueFighter",
-			defaultAsset: bIdle,
-			loop: true,
-			x: 25,
-			y: 35
-		}, function(fighter) {
-			fighter.color = "#008BB8";
-			fighter.lifeSegX = 6;
-			fighter.idleA = bIdle;
-			fighter.walkA = GAME.assets.blueFighterWalk;
-			fighter.hitA = GAME.assets.blueFighterHit;
-			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
-			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
-			fighter.damage = 10;
-			fighter.life = 100;
-			fighter.speed = 1;
-			fighter.keys = {
-				forward: [68],
-				back: [65],
-				hit: [83]
-			};
-		});
+		GAME.createBlueFighter = function() {
+			GAME.createObject({
+				objectName: "blueFighter",
+				defaultAsset: bIdle,
+				loop: true,
+				x: 25,
+				y: 35
+			}, function(fighter) {
+				fighter.color = "#008BB8";
+				fighter.lifeSegX = 6;
+				fighter.idleA = bIdle;
+				fighter.walkA = GAME.assets.blueFighterWalk;
+				fighter.hitA = GAME.assets.blueFighterHit;
+				fighter.defaultRestoreHitDelay = GAME.settings.FPS;
+				fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
+				fighter.damage = 10;
+				fighter.life = 100;
+				fighter.speed = 1;
+				fighter.keys = {
+					forward: [68],
+					back: [65],
+					hit: [83]
+				};
+			});
+		}
 
-		GAME.createObject({
-			objectName: "redFighter",
-			defaultAsset: rIdle,
-			loop: true,
-			x: 183,
-			y: 35
-		}, function(fighter) {
-			fighter.color = "#FC4E51";
-			fighter.lifeSegX = 247;
-			fighter.idleA = rIdle;
-			fighter.walkA = GAME.assets.redFighterWalk;
-			fighter.hitA = GAME.assets.redFighterHit;
-			fighter.defaultRestoreHitDelay = GAME.settings.FPS;
-			fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
-			fighter.damage = 10;
-			fighter.life = 100;
-			fighter.speed = 1;
-			fighter.keys = {
-				forward: [76],
-				back: [74],
-				hit: [75]
-			};
-		});
+		GAME.createRedFighter = function() {
+			GAME.createObject({
+				objectName: "redFighter",
+				defaultAsset: rIdle,
+				loop: true,
+				x: 183,
+				y: 35
+			}, function(fighter) {
+				fighter.color = "#FC4E51";
+				fighter.lifeSegX = 247;
+				fighter.idleA = rIdle;
+				fighter.walkA = GAME.assets.redFighterWalk;
+				fighter.hitA = GAME.assets.redFighterHit;
+				fighter.defaultRestoreHitDelay = GAME.settings.FPS;
+				fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
+				fighter.damage = 10;
+				fighter.life = 100;
+				fighter.speed = 1;
+				fighter.keys = {
+					forward: [76],
+					back: [74],
+					hit: [75]
+				};
+			});
+		}
+
+		GAME.createBlueFighter();
+		GAME.createRedFighter();
 
 		GAME.staticObjects.line = {
 			color: "#191970",
