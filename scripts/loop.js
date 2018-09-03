@@ -14,6 +14,7 @@
 		GAME.drawStaticLine(context);
 		GAME.drawLifeBars(context);
 		GAME.drawGameOver(context);
+		GAME.drawGameInfo(context);
 	}
 
 	GAME.start = function(context) {

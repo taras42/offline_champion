@@ -14,14 +14,30 @@
 		}
 	}
 
+	function drawText(text, font, style, textAlign, x, y, context) {
+		context.font = font;
+		context.fillStyle = style;
+		context.textAlign = textAlign;
+		context.fillText(text, x, y);
+	}
+
 	GAME.drawGameOver = function(context) {
 		var gameOver = GAME.staticObjects.gameOver;
 
 		if (GAME.state.over) {
-			context.font = gameOver.f;
-			context.fillStyle = GAME.state.offlineFighter.color;
-			context.textAlign = gameOver.tA;
-			context.fillText(gameOver.t, gameOver.x, gameOver.y);
+			drawText(gameOver.t, gameOver.f, GAME.state.offlineFighter.color,
+				gameOver.tA, gameOver.x, gameOver.y, context);
+		}
+	}
+
+	GAME.drawGameInfo = function(context) {
+		var gameInfo = GAME.staticObjects.gameInfo;
+
+		if (!GAME.state.modeSelected) {
+			gameInfo.info.forEach(function(info) {
+				drawText(info.t, gameInfo.f, gameInfo.color,
+					gameInfo.tA, info.x, info.y, context);
+			});
 		}
 	}
 

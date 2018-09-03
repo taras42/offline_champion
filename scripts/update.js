@@ -8,6 +8,10 @@
 		return fighter.keys[direction].find(isKeyPressedPredicate);
 	}
 
+	function isPlayerModeSeleted(mode) {
+		return GAME.state.mode[mode].find(isKeyPressedPredicate);
+	}
+
 	function doesFighterHit(fighter) {
 		return !fighter.cooldown
 			&& !fighter.stunned
@@ -190,11 +194,21 @@
 		GAME.createRedFighter();
 	}
 
+	function selectMode() {
+		if (isPlayerModeSeleted(1)) {
+			GAME.state.modeSelected = 1;
+		} else if (isPlayerModeSeleted(2)) {
+			GAME.state.modeSelected = 2;
+		}
+	}
+
 	GAME.updateObjects = function(context, delta) {
 		var blueFighter = GAME.objects.blueFighter,
 				redFighter = GAME.objects.redFighter;
 
-		if (!GAME.state.over) {
+		selectMode(context, delta);
+
+		if (GAME.state.modeSelected &&  !GAME.state.over) {
 				updateFightersState(blueFighter, redFighter, context, delta);
 		}
 

@@ -97,8 +97,10 @@
 		GAME.createBlueFighter();
 		GAME.createRedFighter();
 
+		var darkViolet = "#191970";
+
 		GAME.staticObjects.line = {
-			color: "#191970",
+			color: darkViolet,
 			x1: 4,
 			x2: 252,
 			h: 1,
@@ -113,18 +115,37 @@
 			q: 10
 		};
 
-		var fontSize = 6;
+		var fontSufix = "px Courier",
+				textAlignCenter = "center",
+				screenCenterX = 128;
 
 		GAME.staticObjects.gameOver = {
 			t: "OFFLINE",
-			tA: "center",
-			fs: fontSize,
-			f: fontSize + "px Courier",
-			x: 128,
-			y: 18
+			tA: textAlignCenter,
+			f: 16 + fontSufix,
+			x: screenCenterX,
+			y: 72
 		};
 
-		GAME.state = {};
+		GAME.staticObjects.gameInfo = {
+			info: [
+				{t: "press '1' for singleplayer", x: screenCenterX, y: 18},
+				{t: "press '2' for multiplayer", x: screenCenterX, y: 26},
+				{t: "controls:", x: screenCenterX, y: 40},
+				{t: "1st player: A,S,D", x: screenCenterX, y: 52},
+				{t: "2nd player: J,K,L", x: screenCenterX, y: 60}
+			],
+			color: darkViolet,
+			tA: textAlignCenter,
+			f: 6 + fontSufix,
+		};
+
+		GAME.state = {
+			mode: {
+				1: [49, 97],
+				2: [50, 98]
+			}
+		};
 
 		var canvas = document.getElementById("game"),
 			  context = canvas.getContext("2d");
