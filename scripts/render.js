@@ -34,9 +34,9 @@
 		var gameInfo = GAME.staticObjects.gameInfo;
 
 		if (!GAME.state.modeSelected) {
-			gameInfo.info.forEach(function(info) {
-				drawText(info.t, gameInfo.f, gameInfo.color,
-					gameInfo.tA, info.x, info.y, context);
+			gameInfo.lines.forEach(function(line) {
+				drawText(line.t, gameInfo.f, gameInfo.color,
+					gameInfo.tA, line.x, line.y, context);
 			});
 		}
 	}
