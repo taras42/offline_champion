@@ -126,14 +126,20 @@
 
 	function updateFightersState(blueFighter, redFighter, context, delta) {
 		var blueFighterHits = doesFighterHit(blueFighter),
-			redFighterHits = doesFighterHit(redFighter),
-			damage;
+				blueFighterWalkState = doesFighterWalk(blueFighter),
+				redFighterHits,
+				redFighterWalkState,
+				damage;
 
-		var blueFighterWalkState = doesFighterWalk(blueFighter),
-			redFighterWalkState = doesFighterWalk(redFighter);
+		if (GAME.state.modeSelected === 1) {
+				// AI
+		} else {
+				redFighterHits = doesFighterHit(redFighter);
+				redFighterWalkState = doesFighterWalk(redFighter);
+		}
 
 		var blueFighterNextPosition = getFighterNextPosition(blueFighter, blueFighterWalkState, context, delta),
-			redFighterNextPosition = getFighterNextPosition(redFighter, redFighterWalkState, context, delta);
+				redFighterNextPosition = getFighterNextPosition(redFighter, redFighterWalkState, context, delta);
 
 		if (blueFighterHits) {
 			damage = getHitDamage(blueFighter, redFighter);
