@@ -25,6 +25,14 @@
 		}
 	}
 
+	function doesAIHit() {
+
+	}
+
+	function doesAIWalk() {
+		
+	}
+
 	function getHitDamage(fighter1, fighter2, inverseDirection) {
 		var fighter1Asset = fighter1.currentAsset.asset,
 			fighter2Asset = fighter2.currentAsset.asset,
@@ -132,7 +140,8 @@
 				damage;
 
 		if (GAME.state.modeSelected === 1) {
-				// AI
+				redFighterHits = doesAIHit(redFighter, blueFighter);
+				redFighterWalkState = doesAIWalk(redFighter);
 		} else {
 				redFighterHits = doesFighterHit(redFighter);
 				redFighterWalkState = doesFighterWalk(redFighter);
