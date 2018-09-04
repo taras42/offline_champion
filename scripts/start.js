@@ -87,9 +87,9 @@
 				fighter.life = 100;
 				fighter.speed = 1;
 				fighter.keys = {
-					forward: [76],
-					back: [74],
-					hit: [75]
+					forward: [39],
+					back: [37],
+					hit: [40]
 				};
 			});
 		}
@@ -133,7 +133,7 @@
 				{t: "press '2' for multiplayer", x: screenCenterX, y: 30},
 				{t: "controls:", x: screenCenterX, y: 44},
 				{t: "1st player: A,S,D", x: screenCenterX, y: 56},
-				{t: "2nd player: J,K,L", x: screenCenterX, y: 64},
+				{t: "2nd player: arrow keys", x: screenCenterX, y: 64},
 				{t: "rules:", x: screenCenterX, y: 106},
 				{t: "both players are standing 'online'", x: screenCenterX, y: 114},
 				{t: "to win knock the other player 'offline'!", x: screenCenterX, y: 122},
