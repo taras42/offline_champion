@@ -143,6 +143,10 @@
 			f: 6 + fontSufix,
 		};
 
+		GAME.AI = {
+			hitDelay: 1.5
+		};
+
 		GAME.state = {
 			mode: {
 				1: [49, 97],

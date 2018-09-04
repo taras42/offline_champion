@@ -37,10 +37,13 @@
 
 	function doesAIWalk(redFighter, doesFighterHit) {
 		var forward,
-				back;
+				back,
+				hitDelay;
 
 		if (!doesFighterHit) {
-			 	if (redFighter.cooldown || redFighter.stunned) {
+				if (redFighter.cooldown) {
+						back = redFighter.defaultRestoreHitDelay/redFighter.restoreHitDelay >= GAME.AI.hitDelay;
+				} else if (redFighter.stunned) {
 						back = true;
 				} else {
 						forward = true;
