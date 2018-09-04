@@ -13,9 +13,7 @@
 	}
 
 	function doesFighterHit(fighter) {
-		return !fighter.cooldown
-			&& !fighter.stunned
-			&& fighter.keys.hit.find(isKeyPressedPredicate);
+		return !fighter.cooldown && !fighter.stunned && fighter.keys.hit.find(isKeyPressedPredicate);
 	}
 
 	function doesFighterWalk(fighter) {
@@ -30,7 +28,7 @@
 	}
 
 	function doesAIWalk() {
-		
+
 	}
 
 	function getHitDamage(fighter1, fighter2, inverseDirection) {
@@ -52,7 +50,8 @@
 	function setFightersStateAfterHit(fighter1, fighter2, damage) {
 		fighter1.cooldown = true;
 		fighter2.stunned = true;
-		if (fighter2.life > 0) {
+
+		if (damage && fighter2.life > 0) {
 				fighter2.life -= damage;
 		}
 	}
@@ -151,16 +150,12 @@
 				redFighterNextPosition = getFighterNextPosition(redFighter, redFighterWalkState, context, delta);
 
 		if (blueFighterHits) {
-			damage = getHitDamage(blueFighter, redFighter);
-
 			blueFighter.setAsset(blueFighter.hitA, true);
 
-			if (damage)  {
-				setFightersStateAfterHit(blueFighter, redFighter, damage);
-			}
-		} else if (redFighterHits) {
-			damage = getHitDamage(redFighter, blueFighter, true);
+			damage = getHitDamage(blueFighter, redFighter);
 
+			setFightersStateAfterHit(blueFighter, redFighter, damage);
+		} else if (redFighterHits) {
 			if (redFighter.currentAsset.asset !== redFighter.hitA) {
 				redFighter.setAsset(redFighter.hitA, true);
 				redFighter.prevX = redFighter.x;
@@ -168,9 +163,9 @@
 				redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
 			}
 
-			if (damage)  {
-				setFightersStateAfterHit(redFighter, blueFighter, damage);
-			}
+			damage = getHitDamage(redFighter, blueFighter, true);
+
+			setFightersStateAfterHit(redFighter, blueFighter, damage);
 		} else {
 			trySetFightersPosition(blueFighter, redFighter,
 				blueFighterNextPosition, redFighterNextPosition);
