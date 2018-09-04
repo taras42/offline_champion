@@ -32,7 +32,8 @@
 
 			return !redFighter.cooldown
 				&& !redFighter.stunned
-				&& Boolean(getHitDamage(redFighterInHitState, blueFighter, true));
+				&& Boolean(getHitDamage(redFighterInHitState, blueFighter, true))
+				&& Math.floor(Math.random() * 100) > GAME.AI.missChance;
 	}
 
 	function doesAIWalk(redFighter, doesFighterHit) {

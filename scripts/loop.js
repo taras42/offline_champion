@@ -24,7 +24,7 @@
 			var now =  Date.now(),
 				frameDelay = now - then;
 
-			delta = Math.round(frameDelay/GAME.settings.frameDelay);
+			delta = frameDelay/GAME.settings.frameDelay;
 
 			GAME.updateRedrawCycle(context, delta);
 
