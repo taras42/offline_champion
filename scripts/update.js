@@ -23,12 +23,38 @@
 		}
 	}
 
-	function doesAIHit() {
+	function doesAIHit(redFighter, blueFighter) {
+			var redFighterInHitState = {
+					currentAsset: redFighter.currentAsset,
+					damage: redFighter.damage,
+					x: redFighter.x - getRedFighterHitPosDelta(redFighter)
+			};
 
+			return !redFighter.cooldown
+				&& !redFighter.stunned
+				&& Boolean(getHitDamage(redFighterInHitState, blueFighter, true));
 	}
 
-	function doesAIWalk() {
+	function doesAIWalk(redFighter, doesFighterHit) {
+		var forward,
+				back;
 
+		if (!doesFighterHit) {
+			 	if (redFighter.cooldown || redFighter.stunned) {
+						back = true;
+				} else {
+						forward = true;
+				}
+		}
+
+		return {
+			forward: back,
+			back: forward
+		}
+	}
+
+	function getRedFighterHitPosDelta(redFighter) {
+			return redFighter.hitA.width - redFighter.idleA.width;
 	}
 
 	function getHitDamage(fighter1, fighter2, inverseDirection) {
@@ -49,9 +75,9 @@
 
 	function setFightersStateAfterHit(fighter1, fighter2, damage) {
 		fighter1.cooldown = true;
-		fighter2.stunned = true;
 
 		if (damage && fighter2.life > 0) {
+				fighter2.stunned = true;
 				fighter2.life -= damage;
 		}
 	}
@@ -140,7 +166,7 @@
 
 		if (GAME.state.modeSelected === 1) {
 				redFighterHits = doesAIHit(redFighter, blueFighter);
-				redFighterWalkState = doesAIWalk(redFighter);
+				redFighterWalkState = doesAIWalk(redFighter, redFighterHits);
 		} else {
 				redFighterHits = doesFighterHit(redFighter);
 				redFighterWalkState = doesFighterWalk(redFighter);
@@ -160,7 +186,7 @@
 				redFighter.setAsset(redFighter.hitA, true);
 				redFighter.prevX = redFighter.x;
 
-				redFighter.x -= redFighter.hitA.width - redFighter.idleA.width;
+				redFighter.x -= getRedFighterHitPosDelta(redFighter);
 			}
 
 			damage = getHitDamage(redFighter, blueFighter, true);
