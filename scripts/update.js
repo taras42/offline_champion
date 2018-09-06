@@ -31,7 +31,7 @@
 			},
 			hitChance;
 
-			if (redFighterWalkState.forward && !GAME.AI.currentHitChance) {
+			if (redFighterWalkState.back && !GAME.AI.currentHitChance) {
 				GAME.AI.hitChance = Math.floor(Math.random() * 100);
 			}
 
