@@ -23,17 +23,27 @@
 		}
 	}
 
-	function doesAIHit(redFighter, blueFighter) {
+	function doesAIHit(redFighter, blueFighter, redFighterWalkState) {
 			var redFighterInHitState = {
 					currentAsset: redFighter.currentAsset,
 					damage: redFighter.damage,
 					x: redFighter.x - getRedFighterHitPosDelta(redFighter)
-			};
+			},
+			hitChance;
 
-			return !redFighter.cooldown
-				&& !redFighter.stunned
-				&& Boolean(getHitDamage(redFighterInHitState, blueFighter, true))
-				&& Math.floor(Math.random() * 100) > GAME.AI.missChance;
+			if (redFighterWalkState.forward && !GAME.AI.currentHitChance) {
+				GAME.AI.hitChance = Math.floor(Math.random() * 100);
+			}
+
+			if (!redFighter.cooldown && !redFighter.stunned) {
+				if (doesFighterHitsOpponent(redFighterInHitState, blueFighter, true)) {
+					redFighter.cooldown = true;
+					hitChance = GAME.AI.hitChance;
+					GAME.AI.hitChance = null;
+
+					return hitChance > GAME.AI.missChance;
+				}
+			}
 	}
 
 	function doesAIWalk(redFighter, doesFighterHit) {
@@ -61,28 +71,24 @@
 			return redFighter.hitA.width - redFighter.idleA.width;
 	}
 
-	function getHitDamage(fighter1, fighter2, inverseDirection) {
+	function doesFighterHitsOpponent(fighter1, fighter2, inverseDirection) {
 		var fighter1Asset = fighter1.currentAsset.asset,
 			fighter2Asset = fighter2.currentAsset.asset,
-			fighter1Damage = fighter1.damage,
-			fighter2HalfWidthCoordinate = fighter2.x + fighter2Asset.width/2,
-			damage;
+			fighter2HalfWidthCoordinate = fighter2.x + fighter2Asset.width/2;
 
 		if (inverseDirection) {
-			if (fighter1.x < fighter2HalfWidthCoordinate) {
-				return fighter1Damage;
-			}
-		} else if (fighter1.x + fighter1Asset.width > fighter2HalfWidthCoordinate) {
-			return fighter1Damage;
+			return fighter1.x < fighter2HalfWidthCoordinate;
+		} else {
+			return fighter1.x + fighter1Asset.width > fighter2HalfWidthCoordinate;
 		}
 	}
 
-	function setFightersStateAfterHit(fighter1, fighter2, damage) {
+	function setFightersStateAfterHit(fighter1, fighter2, hitsOpponent) {
 		fighter1.cooldown = true;
 
-		if (damage && fighter2.life > 0) {
+		if (hitsOpponent && fighter2.life > 0) {
 				fighter2.stunned = true;
-				fighter2.life -= damage;
+				fighter2.life -= fighter1.damage;
 		}
 	}
 
@@ -166,11 +172,11 @@
 				blueFighterWalkState = doesFighterWalk(blueFighter),
 				redFighterHits,
 				redFighterWalkState,
-				damage;
+				hitsOpponent;
 
 		if (GAME.state.modeSelected === 1) {
-				redFighterHits = doesAIHit(redFighter, blueFighter);
 				redFighterWalkState = doesAIWalk(redFighter, redFighterHits);
+				redFighterHits = doesAIHit(redFighter, blueFighter, redFighterWalkState);
 		} else {
 				redFighterHits = doesFighterHit(redFighter);
 				redFighterWalkState = doesFighterWalk(redFighter);
@@ -182,9 +188,9 @@
 		if (blueFighterHits) {
 			blueFighter.setAsset(blueFighter.hitA, true);
 
-			damage = getHitDamage(blueFighter, redFighter);
+			hitsOpponent = doesFighterHitsOpponent(blueFighter, redFighter);
 
-			setFightersStateAfterHit(blueFighter, redFighter, damage);
+			setFightersStateAfterHit(blueFighter, redFighter, hitsOpponent);
 		} else if (redFighterHits) {
 			if (redFighter.currentAsset.asset !== redFighter.hitA) {
 				redFighter.setAsset(redFighter.hitA, true);
@@ -193,9 +199,9 @@
 				redFighter.x -= getRedFighterHitPosDelta(redFighter);
 			}
 
-			damage = getHitDamage(redFighter, blueFighter, true);
+			hitsOpponent = doesFighterHitsOpponent(redFighter, blueFighter, true);
 
-			setFightersStateAfterHit(redFighter, blueFighter, damage);
+			setFightersStateAfterHit(redFighter, blueFighter, hitsOpponent);
 		} else {
 			trySetFightersPosition(blueFighter, redFighter,
 				blueFighterNextPosition, redFighterNextPosition);

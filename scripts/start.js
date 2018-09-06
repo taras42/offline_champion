@@ -145,7 +145,7 @@
 
 		GAME.AI = {
 			hitDelay: 1.5,
-			missChance: 90
+			missChance: 70
 		};
 
 		GAME.state = {
