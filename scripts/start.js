@@ -143,8 +143,12 @@
 			f: 6 + fontSufix,
 		};
 
+		GAME.gameplay = {
+			hitFreeze: 1.5,
+			walkCollisionMod: 6
+		};
+
 		GAME.AI = {
-			hitDelay: 1.5,
 			missChance: 70
 		};
 
