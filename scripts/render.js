@@ -78,7 +78,7 @@
 		var assetFrameIndex = assetObject.frameIndex,
 			assetFrameDelay = Math.round(GAME.settings.FPS / assetFPS);
 
-		if (GAME.objectSkipFrameCount[objectKey] >= assetFrameDelay) {
+		if (object.skipFrameCount >= assetFrameDelay) {
 			if (assetFrameIndex < assetFrameCount) {
 				assetFrameIndex = assetFrameIndex + 1;
 			} else if (assetObject.loop) {
@@ -86,7 +86,7 @@
 			}
 
 			object.nextFrame(assetFrameIndex);
-			GAME.objectSkipFrameCount[objectKey] = 1;
+			object.skipFrameCount = 1;
 		}
 
 		context.drawImage(assetObject.asset.spriteSheet,
@@ -96,6 +96,6 @@
 			asset.width, asset.height
 		);
 
-		GAME.objectSkipFrameCount[objectKey] += delta;
+		object.skipFrameCount += delta;
 	}
 })(GAME);

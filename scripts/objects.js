@@ -1,5 +1,5 @@
 (function(GAME) {
-	
+
 	GAME.objects = {};
 	GAME.staticObjects = {};
 	GAME.objectSkipFrameCount = {};
@@ -10,6 +10,7 @@
 		GAME.objects[objectName] = {
 			x: options.x,
 			y: options.y,
+			skipFrameCount: 0,
 			currentAsset: {
 				loop: options.loop,
 				frameIndex: 0,
@@ -24,10 +25,10 @@
 					loop: loop,
 					asset: asset
 				};
+
+				this.skipFrameCount = 0;
 			}
 		};
-
-		GAME.objectSkipFrameCount[objectName] = 0;
 
 		decorate && decorate(GAME.objects[objectName]);
 	};

@@ -73,6 +73,12 @@
 		return fighter.defaultRestoreHitDelay/fighter.restoreHitDelay <= GAME.gameplay.hitFreeze;
 	}
 
+	function setLoopedFighterAssetIfNotAlreadySet(fighter, asset) {
+		if (fighter.currentAsset.asset !== asset) {
+			fighter.setAsset(asset, true);
+		}
+	}
+
 	function getRedFighterHitPosDelta(redFighter) {
 			return redFighter.hitA.width - redFighter.idleA.width;
 	}
@@ -116,7 +122,8 @@
 				fighter.cooldown = false;
 				fighter.stunned = false;
 
-				fighter.setAsset(fighter.idleA, true);
+				setLoopedFighterAssetIfNotAlreadySet(fighter, fighter.idleA);
+
 				resetFighterXToPrevX(fighter);
 			}
 		}
@@ -177,11 +184,9 @@
 		var currentAsset = fighter.currentAsset.asset;
 
 		if (doesFighterWalkForwardOrBack(walkState)) {
-			if (currentAsset !== fighter.walkA) {
-				fighter.setAsset(fighter.walkA, true);
-			}
-		} else if (currentAsset === fighter.walkA) {
-			fighter.setAsset(fighter.idleA, true);
+			setLoopedFighterAssetIfNotAlreadySet(fighter, fighter.walkA);
+		} else if (currentAsset === fighter.walkA || (fighter.cooldown && !isFighterHitFrozen(fighter))) {
+			setLoopedFighterAssetIfNotAlreadySet(fighter, fighter.idleA);
 		}
 	}
 
