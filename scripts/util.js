@@ -10,11 +10,11 @@
 			count = assets.length,
 			loadedCount = 0;
 
-		var onload = function() { 
+		var onload = function() {
 			loadedCount = loadedCount + 1;
 
 			if (loadedCount === count) {
-				callback(); 
+				callback();
 			}
 		};
 
