@@ -269,8 +269,10 @@
 	function selectMode() {
 		if (isPlayerModeSeleted(1)) {
 			GAME.state.modeSelected = 1;
+			GAME.reset();
 		} else if (isPlayerModeSeleted(2)) {
 			GAME.state.modeSelected = 2;
+			GAME.reset();
 		}
 	}
 
