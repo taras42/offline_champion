@@ -159,6 +159,11 @@
 			}
 		};
 
+		// GAME.gammaSound = GAME.createSound([
+		// 	[30, 40, 44, 47], [30, 42], [30, 44],
+		// 	[30, 45], [30, 47], [30, 49]
+		// ], "triangle", false, 3);
+
 		var canvas = document.getElementById("game"),
 			  context = canvas.getContext("2d");
 

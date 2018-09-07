@@ -9,3 +9,4 @@ GAME.settings.res = {
 };
 GAME.settings.frameDelay = GAME.settings.second/GAME.settings.FPS;
 GAME.settings.scale = 5;
+GAME.settings.soundVolume = 0.009;
