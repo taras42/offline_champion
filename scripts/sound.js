@@ -50,12 +50,12 @@
       newValue = value + volumeStep;
 
       if (newValue < 0) {
-        gain.value = 0
+        newValue = 0
       } else if (newValue > 1) {
-        gain.value = 1;
-      } else {
-        gain.value = newValue;
+        newValue = 1;
       }
+
+      gain.value = newValue;
   }
 
   GAME.createSound = function(soundData, waveType, loop, notesAtATime) {
