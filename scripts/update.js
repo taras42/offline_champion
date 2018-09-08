@@ -278,6 +278,7 @@
 		}
 
 		GAME.hitSound.play(delta);
+		GAME.bkgSound.play(delta);
 	}
 
 	GAME.reset = function() {

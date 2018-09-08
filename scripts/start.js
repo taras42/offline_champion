@@ -168,13 +168,90 @@
 			}
 		}
 
-		// GAME.gammaSound = GAME.createSound([
-		// 	[30, 40, 44, 47], [30, 42], [30, 44],
-		// 	[30, 45], [30, 47], [30, 49]
-		// ], "triangle", false, 3);
+		var tempo = 175,
+				oneFourthNoteValue = GAME.settings.FPS * 60 / tempo,
+				oneEighthNoteValue = oneFourthNoteValue/2,
+				halfNoteValueWithDot = oneFourthNoteValue * 3,
+				betweenNotesPause = [1];
+
+		var mainTheme = [
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneEighthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneEighthNoteValue, 52, 57],
+			betweenNotesPause,
+			[oneFourthNoteValue, 56, 61],
+			betweenNotesPause,
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+
+			[oneFourthNoteValue, 45, 50],
+			betweenNotesPause,
+			[oneFourthNoteValue, 45, 50],
+			betweenNotesPause,
+			[oneEighthNoteValue, 45, 50],
+			betweenNotesPause,
+			[oneEighthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneFourthNoteValue, 52, 57],
+			betweenNotesPause,
+			[oneFourthNoteValue, 45, 50],
+			betweenNotesPause,
+			[oneFourthNoteValue, 45, 50],
+			betweenNotesPause,
+
+			[oneFourthNoteValue, 42, 47],
+			betweenNotesPause,
+			[oneFourthNoteValue, 42, 47],
+			betweenNotesPause,
+			[oneEighthNoteValue, 42, 47],
+			betweenNotesPause,
+			[oneEighthNoteValue, 45, 50],
+			betweenNotesPause,
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneFourthNoteValue, 42, 47],
+			betweenNotesPause,
+			[oneFourthNoteValue, 42, 47],
+			betweenNotesPause
+		];
+
+		var bridge1 = [
+			[oneFourthNoteValue, 52, 57],
+			betweenNotesPause,
+			[oneFourthNoteValue, 49, 54],
+			betweenNotesPause,
+			[oneFourthNoteValue, 52, 57],
+			betweenNotesPause,
+			[halfNoteValueWithDot, 56, 61],
+			betweenNotesPause
+		];
+
+		var bridge2 = [
+			[oneFourthNoteValue, 52, 57],
+			betweenNotesPause,
+			[oneFourthNoteValue, 51, 56],
+			betweenNotesPause,
+			[oneFourthNoteValue, 47, 52],
+			betweenNotesPause,
+			[halfNoteValueWithDot, 49, 54],
+			betweenNotesPause
+		];
+
+		var track = mainTheme
+			.concat(bridge1)
+			.concat(mainTheme)
+			.concat(bridge2);
+
+		GAME.bkgSound = GAME.createSound(track, "triangle", true, 2);
 
 		GAME.hitSound = GAME.createSound([
-			[10, 25]
+			[oneEighthNoteValue, 25]
 		], "square", false, 1);
 
 		GAME.hitSound.freeze();
