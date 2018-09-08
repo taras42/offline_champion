@@ -174,72 +174,99 @@
 				halfNoteValueWithDot = oneFourthNoteValue * 3,
 				betweenNotesPause = [1];
 
+		var A = [49, 54],
+			AFourth = [oneFourthNoteValue].concat(A),
+			AEighth = [oneEighthNoteValue].concat(A),
+			AHalf = [halfNoteValueWithDot].concat(A);
+
+		var C = [52, 57],
+			CFourth = [oneFourthNoteValue].concat(C),
+			CEighth = [oneEighthNoteValue].concat(C);
+
+		var E = [56, 61],
+			EFourth = [oneFourthNoteValue].concat(E),
+			EHalf = [halfNoteValueWithDot].concat(E);
+
+		var F = [45, 50],
+			FFourth = [oneFourthNoteValue].concat(F),
+			FEighth = [oneEighthNoteValue].concat(F);
+
+		var D = [42, 47],
+			DFourth = [oneFourthNoteValue].concat(D),
+			DEighth = [oneEighthNoteValue].concat(D);
+
+		var B = [51, 56],
+			BFourth = [oneFourthNoteValue].concat(B);
+
+		var G = [47, 52],
+			GFourth = [oneFourthNoteValue].concat(G);
+
 		var mainTheme = [
-			[oneFourthNoteValue, 49, 54],
+			AFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 49, 54],
+			AFourth,
 			betweenNotesPause,
-			[oneEighthNoteValue, 49, 54],
+			AEighth,
 			betweenNotesPause,
-			[oneEighthNoteValue, 52, 57],
+			CEighth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 56, 61],
+			EFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 49, 54],
+			AFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 49, 54],
-			betweenNotesPause,
-
-			[oneFourthNoteValue, 45, 50],
-			betweenNotesPause,
-			[oneFourthNoteValue, 45, 50],
-			betweenNotesPause,
-			[oneEighthNoteValue, 45, 50],
-			betweenNotesPause,
-			[oneEighthNoteValue, 49, 54],
-			betweenNotesPause,
-			[oneFourthNoteValue, 52, 57],
-			betweenNotesPause,
-			[oneFourthNoteValue, 45, 50],
-			betweenNotesPause,
-			[oneFourthNoteValue, 45, 50],
+			AFourth,
 			betweenNotesPause,
 
-			[oneFourthNoteValue, 42, 47],
+			FFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 42, 47],
+			FFourth,
 			betweenNotesPause,
-			[oneEighthNoteValue, 42, 47],
+			FEighth,
 			betweenNotesPause,
-			[oneEighthNoteValue, 45, 50],
+			AEighth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 49, 54],
+			CFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 42, 47],
+			FFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 42, 47],
+			FFourth,
+			betweenNotesPause,
+
+			DFourth,
+			betweenNotesPause,
+			DFourth,
+			betweenNotesPause,
+			DEighth,
+			betweenNotesPause,
+			FEighth,
+			betweenNotesPause,
+			AFourth,
+			betweenNotesPause,
+			DFourth,
+			betweenNotesPause,
+			DFourth,
 			betweenNotesPause
 		];
 
 		var bridge1 = [
-			[oneFourthNoteValue, 52, 57],
+			CFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 49, 54],
+			AFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 52, 57],
+			CFourth,
 			betweenNotesPause,
-			[halfNoteValueWithDot, 56, 61],
+			EHalf,
 			betweenNotesPause
 		];
 
 		var bridge2 = [
-			[oneFourthNoteValue, 52, 57],
+			CFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 51, 56],
+			BFourth,
 			betweenNotesPause,
-			[oneFourthNoteValue, 47, 52],
+			GFourth,
 			betweenNotesPause,
-			[halfNoteValueWithDot, 49, 54],
+			AHalf,
 			betweenNotesPause
 		];
 
