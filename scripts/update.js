@@ -8,6 +8,10 @@
 		return fighter.keys[direction].find(isKeyPressedPredicate);
 	}
 
+	function isSoundVolumeChanged(direction) {
+		return GAME.sound.keys[direction].find(isKeyPressedPredicate);
+	}
+
 	function isPlayerModeSeleted(mode) {
 		return GAME.state.mode[mode].find(isKeyPressedPredicate);
 	}
@@ -214,6 +218,8 @@
 			hitsOpponent = doesFighterHitsOpponent(blueFighter, redFighter);
 
 			setFightersStateAfterHit(blueFighter, redFighter, hitsOpponent);
+
+			GAME.hitSound.unfreeze();
 		} else if (redFighterHits) {
 			if (redFighter.currentAsset.asset !== redFighter.hitA) {
 				redFighter.setAsset(redFighter.hitA, true);
@@ -225,6 +231,7 @@
 			hitsOpponent = doesFighterHitsOpponent(redFighter, blueFighter, true);
 
 			setFightersStateAfterHit(redFighter, blueFighter, hitsOpponent);
+			GAME.hitSound.unfreeze();
 		} else {
 			updateFightersPosition(blueFighter, redFighter,
 				blueFighterNextPosition, redFighterNextPosition);
@@ -259,6 +266,20 @@
 		}
 	}
 
+	function updateSound() {
+		var isVolumeUp = isSoundVolumeChanged("up"),
+			isVolumeDown = isSoundVolumeChanged("down"),
+			volumeStep = GAME.sound.volumeStep;
+
+		if (isVolumeUp) {
+			GAME.changeVolume(volumeStep);
+		} else if (isVolumeDown) {
+			GAME.changeVolume(volumeStep * -1);
+		}
+
+		GAME.hitSound.play(delta);
+	}
+
 	GAME.reset = function() {
 		GAME.state.over = false;
 
@@ -285,6 +306,8 @@
 		if (GAME.state.modeSelected &&  !GAME.state.over) {
 				updateFightersState(blueFighter, redFighter, context, delta);
 		}
+
+		updateSound(delta);
 
 		updateGameState(blueFighter, redFighter, context, delta);
 	};

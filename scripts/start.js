@@ -159,10 +159,24 @@
 			}
 		};
 
+		GAME.sound = {
+			volumeStep: 0.001,
+			keys: {
+				up: [79],
+				down: [73]
+			}
+		}
+
 		// GAME.gammaSound = GAME.createSound([
 		// 	[30, 40, 44, 47], [30, 42], [30, 44],
 		// 	[30, 45], [30, 47], [30, 49]
 		// ], "triangle", false, 3);
+
+		GAME.hitSound = GAME.createSound([
+			[10, 25]
+		], "square", false, 1);
+
+		GAME.hitSound.freeze();
 
 		var canvas = document.getElementById("game"),
 			  context = canvas.getContext("2d");

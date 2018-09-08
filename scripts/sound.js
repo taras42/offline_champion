@@ -44,6 +44,15 @@
     });
   }
 
+  GAME.changeVolume = function(volumeStep) {
+    var value = gainNode.gain.value,
+      newValue = value + volumeStep;
+
+      if (newValue >= 0 && newValue <= 1) {
+        gainNode.gain.value = newValue;
+      }
+  }
+
   GAME.createSound = function(soundData, waveType, loop, notesAtATime) {
     var oscillators = getOscillators(notesAtATime, waveType),
       isOscillatorConnected = [];
@@ -108,6 +117,10 @@
         }
 
         playExpression(delta);
+      },
+
+      freeze: function() {
+        this.frozen = true;
       },
 
       unfreeze: function() {
