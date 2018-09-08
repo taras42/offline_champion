@@ -266,7 +266,7 @@
 		}
 	}
 
-	function updateSound() {
+	GAME.updateSound = function(delta) {
 		var isVolumeUp = isSoundVolumeChanged("up"),
 			isVolumeDown = isSoundVolumeChanged("down"),
 			volumeStep = GAME.sound.volumeStep;
@@ -306,8 +306,6 @@
 		if (GAME.state.modeSelected &&  !GAME.state.over) {
 				updateFightersState(blueFighter, redFighter, context, delta);
 		}
-
-		updateSound(delta);
 
 		updateGameState(blueFighter, redFighter, context, delta);
 	};

@@ -11,6 +11,8 @@
 			GAME.drawObject(key, context, delta);
 		});
 
+		GAME.updateSound(delta);
+
 		GAME.drawStaticLine(context);
 		GAME.drawLifeBars(context);
 		GAME.drawGameOver(context);
