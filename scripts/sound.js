@@ -45,11 +45,16 @@
   }
 
   GAME.changeVolume = function(volumeStep) {
-    var value = gainNode.gain.value,
+    var gain = gainNode.gain,
+      value = gain.value,
       newValue = value + volumeStep;
 
-      if (newValue >= 0 && newValue <= 1) {
-        gainNode.gain.value = newValue;
+      if (newValue < 0) {
+        gain.value = 0
+      } else if (newValue > 1) {
+        gain.value = 1;
+      } else {
+        gain.value = newValue;
       }
   }
 
