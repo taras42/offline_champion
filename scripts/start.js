@@ -171,8 +171,7 @@
 		var tempo = 175,
 				oneFourthNoteValue = GAME.settings.FPS * 60 / tempo,
 				oneEighthNoteValue = oneFourthNoteValue/2,
-				halfNoteValueWithDot = oneFourthNoteValue * 3,
-				betweenNotesPause = [1];
+				halfNoteValueWithDot = oneFourthNoteValue * 3;
 
 		var A = [49, 54],
 			AFourth = [oneFourthNoteValue].concat(A),
@@ -203,71 +202,42 @@
 
 		var mainTheme = [
 			AFourth,
-			betweenNotesPause,
 			AFourth,
-			betweenNotesPause,
 			AEighth,
-			betweenNotesPause,
 			CEighth,
-			betweenNotesPause,
 			EFourth,
-			betweenNotesPause,
 			AFourth,
-			betweenNotesPause,
 			AFourth,
-			betweenNotesPause,
 
 			FFourth,
-			betweenNotesPause,
 			FFourth,
-			betweenNotesPause,
 			FEighth,
-			betweenNotesPause,
 			AEighth,
-			betweenNotesPause,
 			CFourth,
-			betweenNotesPause,
 			FFourth,
-			betweenNotesPause,
 			FFourth,
-			betweenNotesPause,
 
 			DFourth,
-			betweenNotesPause,
 			DFourth,
-			betweenNotesPause,
 			DEighth,
-			betweenNotesPause,
 			FEighth,
-			betweenNotesPause,
 			AFourth,
-			betweenNotesPause,
 			DFourth,
-			betweenNotesPause,
-			DFourth,
-			betweenNotesPause
+			DFourth
 		];
 
 		var bridge1 = [
 			CFourth,
-			betweenNotesPause,
 			AFourth,
-			betweenNotesPause,
 			CFourth,
-			betweenNotesPause,
-			EHalf,
-			betweenNotesPause
+			EHalf
 		];
 
 		var bridge2 = [
 			CFourth,
-			betweenNotesPause,
 			BFourth,
-			betweenNotesPause,
 			GFourth,
-			betweenNotesPause,
-			AHalf,
-			betweenNotesPause
+			AHalf
 		];
 
 		var track = mainTheme
@@ -275,7 +245,7 @@
 			.concat(mainTheme)
 			.concat(bridge2);
 
-		GAME.bkgSound = GAME.createSound(track, "triangle", true, 2);
+		GAME.bkgSound = GAME.createSound(track, "square", true, 2);
 
 		GAME.hitSound = GAME.createSound([
 			[oneEighthNoteValue, 25]

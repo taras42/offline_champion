@@ -60,7 +60,15 @@
 
   GAME.createSound = function(soundData, waveType, loop, notesAtATime) {
     var oscillators = getOscillators(notesAtATime, waveType),
-      isOscillatorConnected = [];
+      isOscillatorConnected = [],
+      betweenNotesPause = [1];
+
+    soundData = soundData.reduce(function(memo, expression) {
+      memo.push(expression);
+      memo.push(betweenNotesPause);
+
+      return memo;
+    }, []);
 
     var currentExpression = null,
       currentExpressionIndex = 0,
