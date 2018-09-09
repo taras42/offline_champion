@@ -134,9 +134,9 @@
 	}
 
 	GAME.drawObjects = function(context, delta) {
-		var objects = Object.values(GAME.objects);
-
-		objects.forEach(function(object) {
+		Object.values(GAME.objects).sort(function(a, b) {
+			return a.z - b.z;
+		}).forEach(function(object) {
 			GAME.drawObject(object, context, delta);
 		});
 	}

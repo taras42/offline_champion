@@ -31,16 +31,36 @@
 		};
 	}
 
+	function getCrowdSprite(name) {
+		return {
+			name: name,
+			width: 256,
+			height: 50,
+			frameCount: 2,
+			fps: 1
+		}
+	}
+
 	GAME.loadAssets([
 		getIdleSprite("blueFighterIdle"),
 		getWalkSprite("blueFighterWalk"),
 		getHitSprite("blueFighterHit"),
 		getIdleSprite("redFighterIdle"),
 		getWalkSprite("redFighterWalk"),
-		getHitSprite("redFighterHit")
+		getHitSprite("redFighterHit"),
+		getCrowdSprite("crowd")
 	], function() {
 		var bIdle = GAME.assets.blueFighterIdle,
 				rIdle = GAME.assets.redFighterIdle;
+
+		GAME.createObject({
+			objectName: "crowd",
+			defaultAsset: GAME.assets.crowd,
+			loop: true,
+			x: 0,
+			y: 94,
+			z: 3
+		});
 
 		GAME.createBlueFighter = function() {
 			GAME.createObject({
@@ -48,7 +68,8 @@
 				defaultAsset: bIdle,
 				loop: true,
 				x: 25,
-				y: 35
+				y: 35,
+				z: 1
 			}, function(fighter) {
 				fighter.color = "#008BB8";
 				fighter.lifeSegX = 6;
@@ -74,7 +95,8 @@
 				defaultAsset: rIdle,
 				loop: true,
 				x: 183,
-				y: 35
+				y: 35,
+				z: 2
 			}, function(fighter) {
 				fighter.color = "#FC4E51";
 				fighter.lifeSegX = 247;
@@ -157,9 +179,9 @@
 				{t: "2nd player: arrow keys", x: screenCenterX, y: 60},
 				{t: "volume: I,O", x: screenCenterX, y: 68},
 				{t: "pause: P", x: screenCenterX, y: 76},
-				{t: "rules:", x: screenCenterX, y: 106},
-				{t: "both players are standing 'online'", x: screenCenterX, y: 114},
-				{t: "to win knock the other player 'offline'!", x: screenCenterX, y: 122},
+				{t: "rules:", x: screenCenterX, y: 96},
+				{t: "both players are standing 'online'", x: screenCenterX, y: 104},
+				{t: "to win knock the other player 'offline'!", x: screenCenterX, y: 112},
 			],
 			color: darkViolet,
 			tA: textAlignCenter,

@@ -10,6 +10,7 @@
 		GAME.objects[objectName] = {
 			x: options.x,
 			y: options.y,
+			z: options.z,
 			skipFrameCount: 0,
 			currentAsset: {
 				loop: options.loop,
