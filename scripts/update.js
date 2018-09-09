@@ -190,6 +190,7 @@
 		if (doesFighterWalkForwardOrBack(walkState)) {
 			setLoopedFighterAssetIfNotAlreadySet(fighter, fighter.walkA);
 		} else if (currentAsset === fighter.walkA || (fighter.cooldown && !isFighterHitFrozen(fighter))) {
+			resetFighterXToPrevX(fighter);
 			setLoopedFighterAssetIfNotAlreadySet(fighter, fighter.idleA);
 		}
 	}
