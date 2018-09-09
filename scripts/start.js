@@ -79,7 +79,7 @@
 				fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 				fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 				fighter.damage = 10;
-				fighter.life = 100;
+				fighter.life = GAME.gameplay.fightersBaseLife;
 				fighter.speed = 1;
 				fighter.keys = {
 					forward: [68],
@@ -106,7 +106,7 @@
 				fighter.defaultRestoreHitDelay = GAME.settings.FPS;
 				fighter.restoreHitDelay = fighter.defaultRestoreHitDelay;
 				fighter.damage = 10;
-				fighter.life = 100;
+				fighter.life = GAME.gameplay.fightersBaseLife;
 				fighter.speed = 1;
 				fighter.keys = {
 					forward: [39],
@@ -115,9 +115,6 @@
 				};
 			});
 		}
-
-		GAME.createBlueFighter();
-		GAME.createRedFighter();
 
 		var darkViolet = "#191970";
 
@@ -189,20 +186,22 @@
 		};
 
 		GAME.gameplay = {
+			fightersBaseLife: 100,
 			hitFreeze: 1.5,
 			walkCollisionMod: 6
 		};
 
 		GAME.AI = {
-			missChance: 80,
-			currentMissChance: 80,
+			missChance: 70,
+			currentMissChance: 70,
 			missChanceStep: 10,
-			hitAdditionalSteps: 1
+			hitAdditionalSteps: 0
 		};
 
 		GAME.state = {
 			level: 1,
 			maxLevel: 5,
+			modeSelected: null,
 			mode: {
 				1: [49, 97],
 				2: [50, 98]
@@ -214,6 +213,15 @@
 			},
 			isMultiPlayer: function() {
 				return this.modeSelected === 2;
+			},
+			init: function() {
+				GAME.createBlueFighter();
+				GAME.createRedFighter();
+
+				if (this.isSinglePlayer()) {
+					GAME.AI.currentMissChance = GAME.AI.currentMissChance - GAME.AI.missChanceStep * this.level;
+					GAME.objects.redFighter.life = GAME.gameplay.fightersBaseLife + this.level * 10;
+				}
 			}
 		};
 
@@ -316,6 +324,7 @@
 		context.imageSmoothingEnabled = false;
 		context.scale(GAME.settings.scale, GAME.settings.scale);
 
+		GAME.state.init();
 		GAME.start(context);
 	});
 })(GAME);

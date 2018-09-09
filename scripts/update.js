@@ -307,6 +307,7 @@
 
 			if ((level <= GAME.state.maxLevel) && redFighterLost) {
 				GAME.state.level = level;
+				GAME.objects.redFighter.life = GAME.gameplay.fightersBaseLife + level * 10;
 				GAME.AI.currentMissChance -= GAME.AI.missChanceStep;
 			} else {
 				reset();
