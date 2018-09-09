@@ -103,41 +103,23 @@
 		renderLifeBar(redFighter.lifeSegX, redFighter.color, redFighter.life/lifeSeg.q, lifeSeg, context, true);
 	};
 
-	GAME.drawObject = function(object, context, delta) {
+	GAME.drawObject = function(object, context) {
 		var assetObject = object.currentAsset,
-			asset = assetObject.asset,
-			assetFPS = asset.fps,
-			assetFrameCount = asset.frameCount - 1;
-
-		var assetFrameIndex = assetObject.frameIndex,
-			assetFrameDelay = Math.round(GAME.settings.FPS / assetFPS);
-
-		if (object.skipFrameCount >= assetFrameDelay) {
-			if (assetFrameIndex < assetFrameCount) {
-				assetFrameIndex = assetFrameIndex + 1;
-			} else if (assetObject.loop) {
-				assetFrameIndex = 0;
-			}
-
-			object.nextFrame(assetFrameIndex);
-			object.skipFrameCount = 1;
-		}
+			asset = assetObject.asset;
 
 		context.drawImage(assetObject.asset.spriteSheet,
-			0, assetFrameIndex * asset.height,
+			0, assetObject.frameIndex * asset.height,
 			asset.width, asset.height,
 			object.x, object.y,
 			asset.width, asset.height
 		);
-
-		object.skipFrameCount += delta;
 	}
 
-	GAME.drawObjects = function(context, delta) {
+	GAME.drawObjects = function(context) {
 		Object.values(GAME.objects).sort(function(a, b) {
 			return a.z - b.z;
 		}).forEach(function(object) {
-			GAME.drawObject(object, context, delta);
+			GAME.drawObject(object, context);
 		});
 	}
 })(GAME);

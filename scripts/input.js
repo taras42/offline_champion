@@ -5,6 +5,12 @@
 		keys: {}
 	};
 
+	GAME.input.isKeyPressed = function(keys) {
+		return keys.find(function(key) {
+			return GAME.input.keys[key];
+		});
+	}
+
 	body.addEventListener("keydown", function(e) {
 		GAME.input.keys[e.which] = true;
 	});

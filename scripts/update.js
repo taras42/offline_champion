@@ -1,29 +1,19 @@
 (function(GAME) {
 
-	function isKeyPressed(keys) {
-		return keys.find(function(key) {
-			return GAME.input.keys[key];
-		});
-	}
-
 	function doesFighterWalkInDirection(fighter, direction) {
-		return isKeyPressed(fighter.keys[direction]);
-	}
-
-	function isSoundVolumeChanged(direction) {
-		return isKeyPressed(GAME.sound.keys[direction]);
+		return GAME.input.isKeyPressed(fighter.keys[direction]);
 	}
 
 	function isPlayerModeSeleted(mode) {
-		return isKeyPressed(GAME.state.mode[mode]);
+		return GAME.input.isKeyPressed(GAME.state.mode[mode]);
 	}
 
 	function isPauseKeyPressed() {
-		return isKeyPressed(GAME.state.pauseKey);
+		return GAME.input.isKeyPressed(GAME.state.pauseKey);
 	}
 
 	function doesFighterHit(fighter) {
-		return !fighter.cooldown && !fighter.stunned && isKeyPressed(fighter.keys.hit);
+		return !fighter.cooldown && !fighter.stunned && GAME.input.isKeyPressed(fighter.keys.hit);
 	}
 
 	function doesFighterWalk(fighter) {
@@ -147,18 +137,16 @@
 		}
 	}
 
-	function getFighterNextPosition(fighter, walkState, context, delta) {
+	function getFighterNextPosition(fighter, walkState, context) {
 		var forward = walkState.forward,
 			back = walkState.back,
 			walks = doesFighterWalkForwardOrBack(walkState),
 			currentAsset = fighter.currentAsset.asset,
-			speed,
+			speed = fighter.speed,
 			x = fighter.x;
 
 		if (walks) {
 			resetFighterXToPrevX(fighter);
-
-			speed = fighter.speed * delta;
 
 			if (forward) {
 				x = fighter.x + speed;
@@ -209,7 +197,7 @@
 		}
 	}
 
-	function updateFightersState(blueFighter, redFighter, context, delta) {
+	function updateFightersState(blueFighter, redFighter, context) {
 		var blueFighterHits = doesFighterHit(blueFighter),
 				blueFighterWalkState = doesFighterWalk(blueFighter),
 				redFighterHits,
@@ -224,8 +212,8 @@
 				redFighterWalkState = doesFighterWalk(redFighter);
 		}
 
-		var blueFighterNextPosition = getFighterNextPosition(blueFighter, blueFighterWalkState, context, delta),
-				redFighterNextPosition = getFighterNextPosition(redFighter, redFighterWalkState, context, delta);
+		var blueFighterNextPosition = getFighterNextPosition(blueFighter, blueFighterWalkState, context),
+				redFighterNextPosition = getFighterNextPosition(redFighter, redFighterWalkState, context);
 
 		if (blueFighterHits) {
 			blueFighter.setAsset(blueFighter.hitA, true);
@@ -259,7 +247,7 @@
 		tryRestoreFighterHit(redFighter);
 	}
 
-	function updateGameState(blueFighter, redFighter, context, delta) {
+	function updateGameState(blueFighter, redFighter, context) {
 		var offlineFighter;
 
 		if (blueFighter.life <= 0) {
@@ -276,7 +264,7 @@
 
 		if (offlineFighter) {
 			if (offlineFighter.y < GAME.settings.res.y) {
-					offlineFighter.y += offlineFighter.speed * delta;
+					offlineFighter.y += offlineFighter.speed;
 			} else {
 					GAME.state.over = false;
 					GAME.state.offlineFighter = false;
@@ -284,6 +272,31 @@
 					switchAILevel(redFighterLost);
 			}
 		}
+	}
+
+	function updateObjectsAssetFrame() {
+		Object.values(GAME.objects).forEach(function(object) {
+			var assetObject = object.currentAsset,
+				asset = assetObject.asset,
+				assetFPS = asset.fps,
+				assetFrameCount = asset.frameCount - 1;
+
+			var assetFrameIndex = assetObject.frameIndex,
+				assetFrameDelay = Math.round(GAME.settings.FPS / assetFPS);
+
+			if (object.skipFrameCount >= assetFrameDelay) {
+				if (assetFrameIndex < assetFrameCount) {
+					assetFrameIndex = assetFrameIndex + 1;
+				} else if (assetObject.loop) {
+					assetFrameIndex = 0;
+				}
+
+				object.nextFrame(assetFrameIndex);
+				object.skipFrameCount = 1;
+			}
+
+			object.skipFrameCount += 1;
+		});
 	}
 
 	function switchAILevel(redFighterLost) {
@@ -337,35 +350,22 @@
 		}
 	}
 
-	GAME.updateObjects = function(context, delta) {
+	GAME.updateObjects = function(context) {
 		var blueFighter = GAME.objects.blueFighter,
 				redFighter = GAME.objects.redFighter;
 
 		pauseUnpauseGame();
 
 		if (!GAME.state.gamePaused) {
-			selectMode(context, delta);
+			selectMode(context);
 
 			if (GAME.state.modeSelected &&  !GAME.state.over) {
-					updateFightersState(blueFighter, redFighter, context, delta);
+					updateFightersState(blueFighter, redFighter, context);
 			}
 
-			updateGameState(blueFighter, redFighter, context, delta);
+			updateGameState(blueFighter, redFighter, context);
 		}
+
+		updateObjectsAssetFrame();
 	};
-
-	GAME.updateSound = function(delta) {
-		var isVolumeUp = isSoundVolumeChanged("up"),
-			isVolumeDown = isSoundVolumeChanged("down"),
-			volumeStep = GAME.sound.volumeStep;
-
-		if (isVolumeUp) {
-			GAME.changeVolume(volumeStep);
-		} else if (isVolumeDown) {
-			GAME.changeVolume(volumeStep * -1);
-		}
-
-		GAME.hitSound.play(delta);
-		GAME.bkgSound.play(delta);
-	}
 })(GAME);

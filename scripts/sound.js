@@ -86,19 +86,19 @@
       }
     }
 
-    function playExpression(delta) {
+    function playExpression() {
       if (!expressionPlaying) {
         expressionPlaying = true;
         playNotes(currentExpression.notes, oscillators, isOscillatorConnected);
       }
 
-      currentExpressionValue += delta;
+      currentExpressionValue += 1;
     }
 
     return {
       loop: loop,
       frozen: false,
-      play: function(delta) {
+      play: function() {
         var self = this,
           nextExpressionIndex;
 
@@ -129,7 +129,7 @@
           setCurrentExpression();
         }
 
-        playExpression(delta);
+        playExpression();
       },
 
       freeze: function() {
@@ -150,4 +150,23 @@
       }
     };
   }
+
+  function isSoundVolumeChanged(direction) {
+		return GAME.input.isKeyPressed(GAME.sound.keys[direction]);
+	}
+
+  GAME.playSound = function() {
+		var isVolumeUp = isSoundVolumeChanged("up"),
+			isVolumeDown = isSoundVolumeChanged("down"),
+			volumeStep = GAME.sound.volumeStep;
+
+		if (isVolumeUp) {
+			GAME.changeVolume(volumeStep);
+		} else if (isVolumeDown) {
+			GAME.changeVolume(volumeStep * -1);
+		}
+
+		GAME.hitSound.play();
+		GAME.bkgSound.play();
+	}
 })(GAME);

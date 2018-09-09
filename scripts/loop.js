@@ -1,14 +1,13 @@
 (function(GAME) {
 
-	GAME.updateRedrawCycle = function(context, delta) {
+	GAME.update = function(context, delta) {
+		GAME.updateObjects(context, delta);
+	}
+
+	GAME.redraw = function(context) {
 		GAME.clearScreen(context);
 
-		GAME.updateObjects(context, delta);
-
-		GAME.drawObjects(context, delta);
-
-		GAME.updateSound(delta);
-
+		GAME.drawObjects(context);
 		GAME.drawStaticLine(context);
 		GAME.drawLifeBars(context);
 		GAME.drawGameOver(context);
@@ -18,17 +17,25 @@
 	}
 
 	GAME.start = function(context) {
-		var then = Date.now();
+		var then = Date.now(),
+			delta = 0;
 
 		function step() {
 			var now =  Date.now(),
-				frameDelay = now - then;
+				frameDelay = GAME.settings.frameDelay;
 
-			delta = frameDelay/GAME.settings.frameDelay;
+			delta += now - then;
 
-			GAME.updateRedrawCycle(context, delta);
+			while(delta >= frameDelay) {
+				GAME.update(context);
+				GAME.playSound();
 
-		  	then = now;
+				delta -= frameDelay;
+			}
+
+			GAME.redraw(context);
+
+	  	then = now;
 
 			window.requestAnimationFrame(step);
 		}
