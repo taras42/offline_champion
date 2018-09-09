@@ -150,7 +150,8 @@
 		};
 
 		GAME.AI = {
-			missChance: 30
+			missChance: 70,
+			hitAdditionalSteps: 1
 		};
 
 		GAME.state = {

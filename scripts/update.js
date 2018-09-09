@@ -34,6 +34,7 @@
 					currentAsset: redFighter.currentAsset,
 					damage: redFighter.damage,
 					x: redFighter.x - getRedFighterHitPosDelta(redFighter)
+						+ (GAME.AI.hitAdditionalSteps * redFighter.speed)
 			},
 			hitChance;
 
