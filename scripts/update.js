@@ -42,7 +42,7 @@
 			}
 
 			if (!redFighter.cooldown && !redFighter.stunned) {
-				if (doesFighterHitsOpponent(redFighterInHitState, blueFighter, true)) {
+				if (doFightersCollide(redFighterInHitState, blueFighter, true)) {
 					redFighter.cooldown = true;
 					hitChance = GAME.AI.hitChance;
 					GAME.AI.hitChance = null;
@@ -87,16 +87,23 @@
 			return redFighter.hitA.width - redFighter.idleA.width;
 	}
 
-	function doesFighterHitsOpponent(fighter1, fighter2, inverseDirection) {
+	function doFightersCollide(fighter1, fighter2, inverseDirection) {
 		var fighter1Asset = fighter1.currentAsset.asset,
 			fighter2Asset = fighter2.currentAsset.asset,
 			fighter2HalfWidthCoordinate = fighter2.x + fighter2Asset.width/2;
 
-		if (inverseDirection) {
-			return fighter1.x < fighter2HalfWidthCoordinate;
-		} else {
-			return fighter1.x + fighter1Asset.width > fighter2HalfWidthCoordinate;
-		}
+			if (inverseDirection) {
+				return fighter1.x < fighter2HalfWidthCoordinate;
+			} else {
+				return fighter1.x + fighter1Asset.width > fighter2HalfWidthCoordinate;
+			}
+	}
+
+	function doesFighterHitsOpponent(fighter1, fighter2, inverseDirection) {
+		var fighter2Asset = fighter2.currentAsset.asset;
+
+		return (fighter2Asset !== fighter2.hitA)
+			&& doFightersCollide(fighter1, fighter2, inverseDirection);
 	}
 
 	function setFightersStateAfterHit(fighter1, fighter2, hitsOpponent) {
