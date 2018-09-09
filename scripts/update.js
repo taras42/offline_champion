@@ -48,7 +48,7 @@
 					hitChance = GAME.AI.hitChance;
 					GAME.AI.hitChance = null;
 
-					return hitChance > GAME.AI.missChance;
+					return hitChance > GAME.AI.currentMissChance;
 				}
 			}
 	}
@@ -210,7 +210,7 @@
 				redFighterWalkState,
 				hitsOpponent;
 
-		if (GAME.state.modeSelected === 1) {
+		if (GAME.state.isSinglePlayer()) {
 				redFighterWalkState = doesAIWalk(redFighter, redFighterHits);
 				redFighterHits = doesAIHit(redFighter, blueFighter, redFighterWalkState);
 		} else {
@@ -264,13 +264,18 @@
 				offlineFighter = redFighter;
 		}
 
+		var redFighterLost = offlineFighter === redFighter;
+
 		GAME.state.offlineFighter = offlineFighter;
 
 		if (offlineFighter) {
 			if (offlineFighter.y < GAME.settings.res.y) {
 					offlineFighter.y += offlineFighter.speed * delta;
 			} else {
-					GAME.reset();
+					GAME.state.over = false;
+					GAME.state.offlineFighter = false;
+					resetFightersPosition();
+					switchAILevel(redFighterLost);
 			}
 		}
 	}
@@ -290,20 +295,42 @@
 		GAME.bkgSound.play(delta);
 	}
 
-	GAME.reset = function() {
-		GAME.state.over = false;
+	function switchAILevel(redFighterLost) {
+		var level = GAME.state.level;
 
+		if (GAME.state.isSinglePlayer()) {
+			level += 1;
+
+			if ((level <= GAME.state.maxLevel) && redFighterLost) {
+				GAME.state.level = level;
+				GAME.AI.currentMissChance -= GAME.AI.missChanceStep;
+			} else {
+				reset();
+			}
+		}
+	}
+
+	function resetFightersPosition() {
 		GAME.createBlueFighter();
 		GAME.createRedFighter();
 	}
 
+	function reset() {
+		GAME.state.over = false;
+		GAME.state.level = 1;
+		GAME.state.modeSelected = false;
+		GAME.AI.currentMissChance = GAME.AI.missChance;
+
+		resetFightersPosition();
+	};
+
 	function selectMode() {
 		if (isPlayerModeSeleted(1)) {
+			reset();
 			GAME.state.modeSelected = 1;
-			GAME.reset();
 		} else if (isPlayerModeSeleted(2)) {
+			reset();
 			GAME.state.modeSelected = 2;
-			GAME.reset();
 		}
 	}
 

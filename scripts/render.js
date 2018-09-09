@@ -22,11 +22,38 @@
 	}
 
 	GAME.drawGameOver = function(context) {
-		var gameOver = GAME.staticObjects.gameOver;
+		var gameOver = GAME.staticObjects.gameOver,
+			isMaxLevel = GAME.state.level === GAME.state.maxLevel,
+			offlineFighter = GAME.state.offlineFighter,
+			blueFighter = GAME.objects.blueFighter,
+			redFighter = GAME.objects.redFighter,
+			bluePlayerLooses = offlineFighter === blueFighter,
+			redPlayerLooses = offlineFighter === redFighter,
+			isSinglePlayer = GAME.state.isSinglePlayer();
 
 		if (GAME.state.over) {
-			drawText(gameOver.t, gameOver.f, GAME.state.offlineFighter.color,
-				gameOver.tA, gameOver.x, gameOver.y, context);
+			if (isSinglePlayer && isMaxLevel && redPlayerLooses) {
+				drawText(gameOver.tW, gameOver.f, blueFighter.color,
+					gameOver.tA, gameOver.x, gameOver.y, context);
+			} else if (isSinglePlayer && bluePlayerLooses) {
+				drawText(gameOver.tL, gameOver.f, redFighter.color,
+					gameOver.tA, gameOver.x, gameOver.y, context);
+			} else {
+				drawText(gameOver.t, gameOver.f, offlineFighter.color,
+					gameOver.tA, gameOver.x, gameOver.y, context);
+			}
+		}
+	}
+
+	GAME.drawLevel = function(context) {
+		var level = GAME.staticObjects.level;
+
+		if (GAME.state.isSinglePlayer()) {
+			drawText(level.t + " " + GAME.state.level, level.f, level.color,
+				level.tA, level.x, level.y, context);
+		} else if (GAME.state.isMultiPlayer()) {
+			drawText(level.tM, level.f, level.color,
+				level.tA, level.x, level.y, context);
 		}
 	}
 

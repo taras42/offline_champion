@@ -16,6 +16,7 @@
 		GAME.drawStaticLine(context);
 		GAME.drawLifeBars(context);
 		GAME.drawGameOver(context);
+		GAME.drawLevel(context);
 		GAME.drawGameInfo(context);
 	}
 

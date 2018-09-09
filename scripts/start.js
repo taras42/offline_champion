@@ -121,10 +121,22 @@
 
 		GAME.staticObjects.gameOver = {
 			t: "OFFLINE",
+			tW: "OFFLINE CHAMPION",
+			tL: "YOU ARE OFFLINE",
 			tA: textAlignCenter,
 			f: 16 + fontSufix,
 			x: screenCenterX,
 			y: 72
+		};
+
+		GAME.staticObjects.level = {
+			t: "LEVEL",
+			tM: "FIGHT",
+			color: darkViolet,
+			tA: textAlignCenter,
+			f: 8 + fontSufix,
+			x: screenCenterX,
+			y: 11
 		};
 
 		GAME.staticObjects.gameInfo = {
@@ -150,14 +162,24 @@
 		};
 
 		GAME.AI = {
-			missChance: 70,
+			missChance: 80,
+			currentMissChance: 80,
+			missChanceStep: 10,
 			hitAdditionalSteps: 1
 		};
 
 		GAME.state = {
+			level: 1,
+			maxLevel: 5,
 			mode: {
 				1: [49, 97],
 				2: [50, 98]
+			},
+			isSinglePlayer: function() {
+				return this.modeSelected === 1;
+			},
+			isMultiPlayer: function() {
+				return this.modeSelected === 2;
 			}
 		};
 
