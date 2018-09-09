@@ -57,6 +57,15 @@
 		}
 	}
 
+	GAME.drawPause = function(context) {
+		var pause = GAME.staticObjects.pause;
+
+		if (GAME.state.gamePaused) {
+			drawText(pause.t, pause.f, pause.color,
+				pause.tA, pause.x, pause.y, context);
+		}
+	}
+
 	GAME.drawGameInfo = function(context) {
 		var gameInfo = GAME.staticObjects.gameInfo;
 

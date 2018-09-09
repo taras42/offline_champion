@@ -13,6 +13,7 @@
 		GAME.drawLifeBars(context);
 		GAME.drawGameOver(context);
 		GAME.drawLevel(context);
+		GAME.drawPause(context);
 		GAME.drawGameInfo(context);
 	}
 

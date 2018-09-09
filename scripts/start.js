@@ -139,6 +139,15 @@
 			y: 11
 		};
 
+		GAME.staticObjects.pause = {
+			t: "PAUSE",
+			color: darkViolet,
+			tA: textAlignCenter,
+			f: 16 + fontSufix,
+			x: screenCenterX,
+			y: 72
+		};
+
 		GAME.staticObjects.gameInfo = {
 			lines: [
 				{t: "press '1' for singleplayer", x: screenCenterX, y: 18},
