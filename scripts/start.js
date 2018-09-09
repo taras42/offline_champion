@@ -141,12 +141,13 @@
 
 		GAME.staticObjects.gameInfo = {
 			lines: [
-				{t: "press '1' for singleplayer", x: screenCenterX, y: 22},
-				{t: "press '2' for multiplayer", x: screenCenterX, y: 30},
-				{t: "controls:", x: screenCenterX, y: 44},
-				{t: "1st player: A,S,D", x: screenCenterX, y: 56},
-				{t: "2nd player: arrow keys", x: screenCenterX, y: 64},
-				{t: "volume: I,O", x: screenCenterX, y: 72},
+				{t: "press '1' for singleplayer", x: screenCenterX, y: 18},
+				{t: "press '2' for multiplayer", x: screenCenterX, y: 26},
+				{t: "controls:", x: screenCenterX, y: 40},
+				{t: "1st player: A,S,D", x: screenCenterX, y: 52},
+				{t: "2nd player: arrow keys", x: screenCenterX, y: 60},
+				{t: "volume: I,O", x: screenCenterX, y: 68},
+				{t: "pause: P", x: screenCenterX, y: 76},
 				{t: "rules:", x: screenCenterX, y: 106},
 				{t: "both players are standing 'online'", x: screenCenterX, y: 114},
 				{t: "to win knock the other player 'offline'!", x: screenCenterX, y: 122},
@@ -175,6 +176,8 @@
 				1: [49, 97],
 				2: [50, 98]
 			},
+			gamePaused: false,
+			pauseKey: [80],
 			isSinglePlayer: function() {
 				return this.modeSelected === 1;
 			},

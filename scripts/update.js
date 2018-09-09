@@ -1,23 +1,29 @@
 (function(GAME) {
 
-	function isKeyPressedPredicate(key) {
-		return GAME.input.keys[key];
+	function isKeyPressed(keys) {
+		return keys.find(function(key) {
+			return GAME.input.keys[key];
+		});
 	}
 
 	function doesFighterWalkInDirection(fighter, direction) {
-		return fighter.keys[direction].find(isKeyPressedPredicate);
+		return isKeyPressed(fighter.keys[direction]);
 	}
 
 	function isSoundVolumeChanged(direction) {
-		return GAME.sound.keys[direction].find(isKeyPressedPredicate);
+		return isKeyPressed(GAME.sound.keys[direction]);
 	}
 
 	function isPlayerModeSeleted(mode) {
-		return GAME.state.mode[mode].find(isKeyPressedPredicate);
+		return isKeyPressed(GAME.state.mode[mode]);
+	}
+
+	function isPauseKeyPressed() {
+		return isKeyPressed(GAME.state.pauseKey);
 	}
 
 	function doesFighterHit(fighter) {
-		return !fighter.cooldown && !fighter.stunned && fighter.keys.hit.find(isKeyPressedPredicate);
+		return !fighter.cooldown && !fighter.stunned && isKeyPressed(fighter.keys.hit);
 	}
 
 	function doesFighterWalk(fighter) {
@@ -280,21 +286,6 @@
 		}
 	}
 
-	GAME.updateSound = function(delta) {
-		var isVolumeUp = isSoundVolumeChanged("up"),
-			isVolumeDown = isSoundVolumeChanged("down"),
-			volumeStep = GAME.sound.volumeStep;
-
-		if (isVolumeUp) {
-			GAME.changeVolume(volumeStep);
-		} else if (isVolumeDown) {
-			GAME.changeVolume(volumeStep * -1);
-		}
-
-		GAME.hitSound.play(delta);
-		GAME.bkgSound.play(delta);
-	}
-
 	function switchAILevel(redFighterLost) {
 		var level = GAME.state.level;
 
@@ -310,6 +301,17 @@
 		}
 	}
 
+	function pauseUnpauseGame() {
+		if (isPauseKeyPressed() && GAME.state.modeSelected) {
+			if (GAME.state.pauseKeyUnpressed) {
+				GAME.state.pauseKeyUnpressed = false;
+				GAME.state.gamePaused = !GAME.state.gamePaused;
+			}
+	 	} else {
+		 	GAME.state.pauseKeyUnpressed = true;
+	 	}
+	}
+
 	function resetFightersPosition() {
 		GAME.createBlueFighter();
 		GAME.createRedFighter();
@@ -319,6 +321,7 @@
 		GAME.state.over = false;
 		GAME.state.level = 1;
 		GAME.state.modeSelected = false;
+		GAME.state.gamePaused = false;
 		GAME.AI.currentMissChance = GAME.AI.missChance;
 
 		resetFightersPosition();
@@ -338,12 +341,31 @@
 		var blueFighter = GAME.objects.blueFighter,
 				redFighter = GAME.objects.redFighter;
 
-		selectMode(context, delta);
+		pauseUnpauseGame();
 
-		if (GAME.state.modeSelected &&  !GAME.state.over) {
-				updateFightersState(blueFighter, redFighter, context, delta);
+		if (!GAME.state.gamePaused) {
+			selectMode(context, delta);
+
+			if (GAME.state.modeSelected &&  !GAME.state.over) {
+					updateFightersState(blueFighter, redFighter, context, delta);
+			}
+
+			updateGameState(blueFighter, redFighter, context, delta);
+		}
+	};
+
+	GAME.updateSound = function(delta) {
+		var isVolumeUp = isSoundVolumeChanged("up"),
+			isVolumeDown = isSoundVolumeChanged("down"),
+			volumeStep = GAME.sound.volumeStep;
+
+		if (isVolumeUp) {
+			GAME.changeVolume(volumeStep);
+		} else if (isVolumeDown) {
+			GAME.changeVolume(volumeStep * -1);
 		}
 
-		updateGameState(blueFighter, redFighter, context, delta);
-	};
+		GAME.hitSound.play(delta);
+		GAME.bkgSound.play(delta);
+	}
 })(GAME);

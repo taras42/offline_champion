@@ -1,15 +1,11 @@
 (function(GAME) {
 
 	GAME.updateRedrawCycle = function(context, delta) {
-		var objectKeys = Object.keys(GAME.objects);
-
 		GAME.clearScreen(context);
 
 		GAME.updateObjects(context, delta);
 
-		objectKeys.forEach(function(key) {
-			GAME.drawObject(key, context, delta);
-		});
+		GAME.drawObjects(context, delta);
 
 		GAME.updateSound(delta);
 

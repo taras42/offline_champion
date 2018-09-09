@@ -94,9 +94,7 @@
 		renderLifeBar(redFighter.lifeSegX, redFighter.color, redFighter.life/lifeSeg.q, lifeSeg, context, true);
 	};
 
-	GAME.drawObject = function(objectKey, context, delta) {
-		var object = GAME.objects[objectKey];
-
+	GAME.drawObject = function(object, context, delta) {
 		var assetObject = object.currentAsset,
 			asset = assetObject.asset,
 			assetFPS = asset.fps,
@@ -124,5 +122,13 @@
 		);
 
 		object.skipFrameCount += delta;
+	}
+
+	GAME.drawObjects = function(context, delta) {
+		var objects = Object.values(GAME.objects);
+
+		objects.forEach(function(object) {
+			GAME.drawObject(object, context, delta);
+		});
 	}
 })(GAME);
