@@ -83,7 +83,7 @@
 				fighter.speed = 1;
 				fighter.keys = {
 					forward: [68],
-					back: [65],
+					back: [65, 81],
 					hit: [83]
 				};
 			});
@@ -172,7 +172,7 @@
 				{t: "press '1' for singleplayer", x: screenCenterX, y: 18},
 				{t: "press '2' for multiplayer", x: screenCenterX, y: 26},
 				{t: "controls:", x: screenCenterX, y: 40},
-				{t: "1st player: A,S,D", x: screenCenterX, y: 52},
+				{t: "1st player: A(Q),S,D", x: screenCenterX, y: 52},
 				{t: "2nd player: arrow keys", x: screenCenterX, y: 60},
 				{t: "volume: I,O", x: screenCenterX, y: 68},
 				{t: "pause: P", x: screenCenterX, y: 76},
