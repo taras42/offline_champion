@@ -11,11 +11,15 @@
 		});
 	}
 
+	function getKey(e) {
+		return e.key.toLowerCase();
+	}
+
 	body.addEventListener("keydown", function(e) {
-		GAME.input.keys[e.which] = true;
+		GAME.input.keys[getKey(e)] = true;
 	});
 
 	body.addEventListener("keyup", function(e) {
-		GAME.input.keys[e.which] = false;
+		GAME.input.keys[getKey(e)] = false;
 	});
 })(GAME);

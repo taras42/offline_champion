@@ -82,9 +82,9 @@
 				fighter.life = GAME.gameplay.fightersBaseLife;
 				fighter.speed = 1;
 				fighter.keys = {
-					forward: [68],
-					back: [65, 81],
-					hit: [83]
+					forward: ["d"],
+					back: ["a", "q"],
+					hit: ["s"]
 				};
 			});
 		}
@@ -109,9 +109,9 @@
 				fighter.life = GAME.gameplay.fightersBaseLife;
 				fighter.speed = 1;
 				fighter.keys = {
-					forward: [39],
-					back: [37],
-					hit: [40]
+					forward: ["arrowright"],
+					back: ["arrowleft"],
+					hit: ["arrowdown"]
 				};
 			});
 		}
@@ -203,11 +203,11 @@
 			maxLevel: 5,
 			modeSelected: null,
 			mode: {
-				1: [49, 97],
-				2: [50, 98]
+				1: ["1"],
+				2: ["2"]
 			},
 			gamePaused: false,
-			pauseKey: [80],
+			pauseKey: ["p"],
 			isSinglePlayer: function() {
 				return this.modeSelected === 1;
 			},
@@ -228,8 +228,8 @@
 		GAME.sound = {
 			volumeStep: 0.001,
 			keys: {
-				up: [79],
-				down: [73]
+				up: ["o"],
+				down: ["i"]
 			}
 		}
 
