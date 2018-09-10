@@ -134,7 +134,7 @@
 			q: 10
 		};
 
-		var fontSufix = "px Courier",
+		var fontSufix = "px monospace",
 				textAlignCenter = "center",
 				screenCenterX = 128;
 
