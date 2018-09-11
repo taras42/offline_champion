@@ -12,7 +12,7 @@
 	}
 
 	function getKey(e) {
-		return e.key.toLowerCase();
+		return e.code;
 	}
 
 	body.addEventListener("keydown", function(e) {
